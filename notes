@@ -1,0 +1,42 @@
+- [ ] general:
+
+	- [ ] name!
+	- [ ] meet w/ arafat Friday @ 11 @ CINC (1777 Exposition Drive, Boulder, CO 80301) :(
+	- [ ] research (arafat mentioned GenSim)
+	- [ ] talk to walter kintsch? --> lsa.colorado.edu
+
+- [ ] website:
+	
+	- [x] hosting (we can easily host the website with firebase)
+	- [ ] find a good template (functionality, usability (for programmers), and looks)
+	- [ ] read/write to grademebaby.firebaseio.com
+	- [ ] custom domain (without .firebase.com)
+
+- [ ] random ideas:
+
+	- [ ] automate creation of first order logic signature?
+		-- specifies expression type for first order logic
+		-- i.e. 
+			
+			unary predicate:
+				hungry(Jared) <-- hungry is a formula with a truth value, Jared is an entity			
+			
+			binary predicate:
+				love(Connor, Twin Peaks) <-- love is a formula with a truth value, Connor and Twin Peaks are entities
+			
+			/* KEY
+			e = entity
+			t = formula
+
+			<from, to>
+			*/
+
+			signature = {'hungry': '<e, t>',
+				     'love':   '<e, e>',	
+					.
+					.
+					. 
+						}
+		-- while we can't use this to prove the actual real world validity of claims, we could use it to ensure that the logical structure of the essay is both coherent and sound
+	- [ ] page to show status details? i.e. status/accuracy of all models currently being trained, outputs danger signals for models that might not converge (bypass epoch threshold), kind of like an admin page, maybe we could even do it for each user
+	- [ ] 
