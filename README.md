@@ -86,15 +86,9 @@ Size: 4 hours, 3 story points
 
 **Project Tracking software:**
 
-Trello is most common
-Pivotal Tracker
-Basecamp
+Trello 
 
+**Project plan:**
 
-**GitHub Issues & Milestones**
-
-
-Link to project tracking software: make sure instructor and TAs have access
-
-
-Project plan: created from your Project Tracking software. Copy-paste the plan (or screenshot of) from your project tracking software into the repository.
+![Image of Project Plan]
+(https://github.com/abeautifulman/DoubleCheck/blob/master/doublecheck_project_tracker.png)
