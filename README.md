@@ -7,23 +7,23 @@ Team Members:
 * Wil Braun
 * Joe Kiefer 
 
-Title of Project:
+**Title of Project:**
 DoubleCheck
 
-Description:
+**Description:**
 Essay proofreader that gives user feedback about the overall quality of their essay, informing them of any common mistakes.
 
-Vision Statement:
+**Vision Statement:**
 College Essays, now slightly less terrible
 
-Motivation:
+**Motivation:**
 Provide a tool to help streamline the task of essay writing by providing instant feedback and suggestions. 
 
-Risks:
+**Risks:**
 * May have difficulty finding graded college essays to train supervised learning algorithm
 * Scale of project, ability to correctly implement desired characteristics
 
-Mitigation strategy:
+**Mitigation strategy:**
 * Collaboration with leading experts in the NLP field
 * Utilization of open source libraries (NLTK, GenSim, Numpy, etc.)
 * Essay writing domain knowledge
@@ -31,9 +31,9 @@ Mitigation strategy:
 
 
 
-List of requirements:
+**List of requirements:**
 
-User Requirements: (Cases)
+**User Requirements: (Cases)**
 1.1 “As a [role], I want to [do X] so that I can [benefit with Y]”
 Size:
 
@@ -64,15 +64,15 @@ All stories should be sized to be completed in less than 8 hours (approximately,
 [optional] you can add user type (e.g., Admin, end user, potential customer,…)
 
 
-Methodology: Agile
+**Methodology:** Agile
 
-Project Tracking software:
+**Project Tracking software:**
 Trello is most common
 Pivotal Tracker
 Basecamp
 
 
-GitHub Issues & Milestones
+**GitHub Issues & Milestones**
 
 
 Link to project tracking software: make sure instructor and TAs have access
