@@ -1,6 +1,6 @@
 # DoubleCheck
 
-Team Members:
+**Team Members:**
 * Connor Davis
 * Jared Jolton
 * Ryan Bohannon
