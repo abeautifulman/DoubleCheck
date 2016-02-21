@@ -116,13 +116,12 @@ class Document():
 	def proofread(self):
 		 # our API key for AfterTheDeadline
 		ATD.setDefaultKey(hash("DoubleCheck")) 
-		
-		# check the document for all errors sentence by sentence to ensure the connection does not timeout	
-		for sentence in self.sent_detector.tokenize(self.raw.decode('utf-8').strip()): # the split into sentences should probably happen when the document is converted to raw text, because this list is used several times throughout the program
- 			errors = ATD.checkDocument(sentence.encode('utf-8'))
-			for error in errors:
-				print "%s error for: %s **%s**" % (error.type, error.precontext, error.string)
-				print "some suggestions: %s" % (", ".join(error.suggestions),)
+
+		# check the document for grammar and spelling errors 	
+		errors = ATD.checkDocument(self.raw)
+		for error in errors: 	
+			print "%s error for: %s **%s**" % (error.type, error.precontext, error.string)
+			print "some suggestions: %s" % (", ".join(error.suggestions),)
 
 	def vectorize(self):
 		# tokenize and remove stopwords
