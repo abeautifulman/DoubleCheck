@@ -2,6 +2,10 @@
 
 print "importing libraries..."
 
+# saving and displaying output
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 # text conversion 
 from subprocess import Popen, PIPE
 from docx       import opendocx, getdocumenttext
@@ -12,8 +16,13 @@ from pdfminer.layout    import LAParams
 from pdfminer.pdfpage   import PDFPage
 from cStringIO          import StringIO
 
+# proofreading by After The Deadline (https://blog.afterthedeadline.com/2009/09/15/python-bindings-for-atd/)
+import ATD
+
 # natural language processing
-from nltk import data, tokenize, pos_tag
+from nltk        import data, tokenize, pos_tag
+from gensim      import corpora, models, similarities
+from collections import defaultdict
 
 # database access
 from firebase import firebase
@@ -23,8 +32,9 @@ class Document():
 	convert, parse, and operate on input text
 
 	TODO: 
+	- [ ] change all print statements to logs
 	- [x] support for .pdf, .doc, .docx, and .odt
-	- [ ] support for .txt
+	- [x] support for .txt
 	- [x] sentence tokenize
 	- [ ] paragraph tokenize !!!
 	- [x] part of speech tagging
@@ -50,7 +60,7 @@ class Document():
 
 	def __init__(self, filename):
 		self.filename     = filename # contains extension
-		self.raw          = list()   # documentas str 
+		self.raw          = str()    # document as str 
 		self.preprocessed = dict()   # text converted into ( word, lemma, [POS] ) format
 		self.stats        = dict()
 
@@ -98,7 +108,52 @@ class Document():
     	
 		elif filename[-4:] == ".pdf":
         		self.raw = self.convert_pdf_to_txt(file_path)
+		
+		elif filename[-4:] == ".txt":
+			with open(file_path, 'r') as file_:
+				self.raw = file_.read()
 
+	def proofread(self):
+		 # our API key for AfterTheDeadline
+		ATD.setDefaultKey(hash("DoubleCheck")) 
+		
+		# check the document for all errors sentence by sentence to ensure the connection does not timeout	
+		for sentence in self.sent_detector.tokenize(self.raw.decode('utf-8').strip()): # the split into sentences should probably happen when the document is converted to raw text, because this list is used several times throughout the program
+ 			errors = ATD.checkDocument(sentence.encode('utf-8'))
+			for error in errors:
+				print "%s error for: %s **%s**" % (error.type, error.precontext, error.string)
+				print "some suggestions: %s" % (", ".join(error.suggestions),)
+
+	def vectorize(self):
+		# tokenize and remove stopwords
+		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
+		stoplist  = set('for a of the and to in'.split())
+		texts     = [[word for word in sentence.lower().split() if word not in stoplist] for sentence in sentences]
+		
+		# compute the frequency of each token
+		frequency = defaultdict(int)
+		for text in texts:
+			for token in text:
+				frequency[token] += 1
+
+		# remove words that appear only once
+		texts = [[token for token in text if frequency[token] > 1] for text in texts]
+		
+		# construct a gensim dictionary and corpus (bag of words)
+		dictionary = corpora.Dictionary(texts)
+		corpus     = [dictionary.doc2bow(text) for text in texts] # currently, "text" is a sentence in the document
+
+		# define LDA model
+		lda = models.ldamodel.LdaModel( corpus       = corpus, 
+						id2word      = dictionary,
+						num_topics   = 100, #what should this be ???
+						update_every = 100, 
+						chunksize    = 10000, 
+						passes       = 1000 )
+		
+		# print the extracted topics
+		lda.print_topics(10)	
+	 
 	def preprocess_text(self):
 		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
 		tokens    = [self.tokenizer.tokenize(sentence) for sentence in sentences]		
@@ -118,31 +173,37 @@ class Document():
 def main():
 	user     = raw_input('user: ')
 	filename = raw_input('filename: ') 
-	name     = filename[:-5]
+	name     = filename[:-5] # this is wrong !!
 
 	doc = Document(filename)
 
 	# check to see if the file is already in the database
 	user_files = doc.database.get('/documents/' + user, None)
 	if name in user_files.keys():
+		''' <-- currently broken?
 		print "loading document from database..."
 		doc.raw          = user_files[name].keys()[0]['raw'] # complicated syntax to bypass random key generation :(
 		doc.preprocessed = user_files[name].keys()[0]['tagged'] 
 		doc.stats        = user_files[name].keys()[0]['stats']
-	
+		'''
 	else:
 		print "converting document to raw text..."
 		doc.document_to_text(doc.filename, doc.filename)
-		print "preprocessing raw text..."
-		doc.preprocess_text()
-		print "getting document statistics..."
-		doc.statistics()
-		
+		print "proofreading the document..."
+		doc.proofread()
+		print "NOT vectorizing raw text and performing LDA..."
+		#doc.vectorize() # must be called after document_to_test
+		print "NOT preprocessing raw text..."
+		#doc.preprocess_text()
+		print "NOT getting document statistics..."
+		#doc.statistics()
+		print "NOT writing document to database..."
+		'''
 		db_entry = { "filename": doc.filename,
 		     	     "raw":      doc.raw,
 		     	     "tagged":   doc.preprocessed,
 		     	     "stats":    doc.stats }	
-
-		doc.database.post('/documents/' + user + "/" + name, db_entry) 	
+		'''
+		#doc.database.post('/documents/' + user + "/" + name, db_entry) 	
 
 if __name__=="__main__": main()
