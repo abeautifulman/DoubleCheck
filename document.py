@@ -24,7 +24,12 @@ from nltk        import data, tokenize, pos_tag
 from gensim      import corpora, models, similarities
 from collections import defaultdict
 
-# database access
+# LDA visualization	
+import pyLDAvis
+import pyLDAvis.gensim
+
+# database 
+import json
 from firebase import firebase
 
 class Document():
@@ -119,9 +124,21 @@ class Document():
 
 		# check the document for grammar and spelling errors 	
 		errors = ATD.checkDocument(self.raw)
+
+		'''
+		# print the errors
 		for error in errors: 	
 			print "%s error for: %s **%s**" % (error.type, error.precontext, error.string)
 			print "some suggestions: %s" % (", ".join(error.suggestions),)
+		'''
+
+		# write the errors to the database
+		err2db = [{"type":        error.type,
+			   "precontext":  error.precontext,
+			   "string":      error.string,
+			   "suggestions": error.suggestions} for error in errors] 
+
+		print json.dumps(err2db, sort_keys=True, indent=4)
 
 	def vectorize(self):
 		# tokenize and remove stopwords
@@ -146,13 +163,18 @@ class Document():
 		lda = models.ldamodel.LdaModel( corpus       = corpus, 
 						id2word      = dictionary,
 						num_topics   = 100, #what should this be ???
-						update_every = 100, 
+						update_every = 1, 
 						chunksize    = 10000, 
-						passes       = 1000 )
+						passes       = 100 )
 		
 		# print the extracted topics
 		lda.print_topics(10)	
-	 
+
+		# visualize the lda space
+		vis_data = pyLDAvis.gensim.prepare(lda, corpus, dictionary)
+        	pyLDAvis.display(vis_data)
+       		pyLDAvis.show(vis_data)
+
 	def preprocess_text(self):
 		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
 		tokens    = [self.tokenizer.tokenize(sentence) for sentence in sentences]		
@@ -190,8 +212,8 @@ def main():
 		doc.document_to_text(doc.filename, doc.filename)
 		print "proofreading the document..."
 		doc.proofread()
-		print "NOT vectorizing raw text and performing LDA..."
-		#doc.vectorize() # must be called after document_to_test
+		print "vectorizing raw text and performing LDA..."
+		doc.vectorize() # must be called after document_to_test
 		print "NOT preprocessing raw text..."
 		#doc.preprocess_text()
 		print "NOT getting document statistics..."
