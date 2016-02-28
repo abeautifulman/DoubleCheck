@@ -32,6 +32,9 @@ import pyLDAvis.gensim
 import json
 from firebase import firebase
 
+# wikipedia parsing
+from wikitools import Topic
+
 class Document():
 	'''
 	convert, parse, and operate on input text
@@ -63,7 +66,12 @@ class Document():
 	tokenizer     = tokenize.TreebankWordTokenizer()
 	sent_detector = data.load('tokenizers/punkt/english.pickle')
 
-	def __init__(self, filename):
+	# list of common words that do not contain semantic information
+	with open('stopwords.txt', 'r') as sw:
+		stopwords = [word.rstrip() for word in sw.readlines()]
+
+	def __init__(self, filename, user):
+		self.author       = user
 		self.filename     = filename # contains extension
 		self.raw          = str()    # document as str 
 		self.preprocessed = dict()   # text converted into ( word, lemma, [POS] ) format
@@ -138,13 +146,18 @@ class Document():
 			   "string":      error.string,
 			   "suggestions": error.suggestions} for error in errors] 
 
-		print json.dumps(err2db, sort_keys=True, indent=4)
+		json_entry = json.dumps(err2db, sort_keys=True, indent=4)
+		#self.database.put('/documents/' + self.author + "/" + self.filename + "/proofread/", err2db) 
+		#self.database.put(err2db) 
+		result = self.database.post('/proofreads/' + self.author + '/' + self.filename + '/', err2db)
+		
 
 	def vectorize(self):
 		# tokenize and remove stopwords
-		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
-		stoplist  = set('for a of the and to in'.split())
-		texts     = [[word for word in sentence.lower().split() if word not in stoplist] for sentence in sentences]
+		#sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip()) # use raw text
+		sentences = Topic(raw_input('topic: ')).text
+		#stoplist  = set('for this that by or is a of the and to in are be as an it can on if at which then also with used such not from use other have some these more using has many one was may often but their they than when been its not all may some have had'.split())
+		texts     = [[word for word in sentence.lower().split() if word not in self.stoplist] for sentence in sentences]
 		
 		# compute the frequency of each token
 		frequency = defaultdict(int)
@@ -162,14 +175,11 @@ class Document():
 		# define LDA model
 		lda = models.ldamodel.LdaModel( corpus       = corpus, 
 						id2word      = dictionary,
-						num_topics   = 100, #what should this be ???
+						num_topics   = 10, #what should this be ???
 						update_every = 1, 
 						chunksize    = 10000, 
-						passes       = 100 )
+						passes       = 1 )
 		
-		# print the extracted topics
-		lda.print_topics(10)	
-
 		# visualize the lda space
 		vis_data = pyLDAvis.gensim.prepare(lda, corpus, dictionary)
         	pyLDAvis.display(vis_data)
@@ -196,11 +206,12 @@ def main():
 	filename = raw_input('filename: ') 
 	name     = filename[:-5] # this is wrong !!
 
-	doc = Document(filename)
+	doc = Document(filename, user)
 
 	# check to see if the file is already in the database
 	user_files = doc.database.get('/documents/' + user, None)
-	if name in user_files.keys():
+	debug = True
+	if debug == False:  #name in user_files.keys():
 		''' <-- currently broken?
 		print "loading document from database..."
 		doc.raw          = user_files[name].keys()[0]['raw'] # complicated syntax to bypass random key generation :(
@@ -208,12 +219,12 @@ def main():
 		doc.stats        = user_files[name].keys()[0]['stats']
 		'''
 	else:
-		print "converting document to raw text..."
-		doc.document_to_text(doc.filename, doc.filename)
+		print "NOT converting document to raw text..."
+		#doc.document_to_text(doc.filename, doc.filename)
 		print "proofreading the document..."
 		doc.proofread()
-		print "vectorizing raw text and performing LDA..."
-		doc.vectorize() # must be called after document_to_test
+		print "NOT vectorizing text and performing LDA..."
+		#doc.vectorize() # must be called after document_to_test
 		print "NOT preprocessing raw text..."
 		#doc.preprocess_text()
 		print "NOT getting document statistics..."
