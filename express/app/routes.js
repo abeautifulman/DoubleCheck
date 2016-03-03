@@ -78,8 +78,11 @@ module.exports = function(app, passport) {
         });
     });
 
-
-
+   app.get('/profile', function(req, res) {
+        res.render('profile.jade', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
 
     // =====================================
     // LOGOUT ==============================

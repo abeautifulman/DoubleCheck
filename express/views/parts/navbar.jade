@@ -15,11 +15,14 @@ nav.navbar.navbar-static-top.header-navbar
         a.navbar-brand(href="/")
             .logo.text-nowrap
                 .logo__img
-                    i.fa.fa-rocket
-                span.logo__text Mars Oasis 
+                    i.fa.fa-pencil
+                span.logo__text DoubleCheck
 
     .topnavbar
         ul.nav.navbar-nav.navbar-left
+            li(class=page=='Profile' ? 'active' : '')
+                a(href="/profile")
+                    span Profile 
             li(class=page=='Dashboard' ? 'active' : '')
                 a(href="/")
                     span Dashboard 
