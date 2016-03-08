@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
         });
     });
 
-   app.get('/about', isLoggedIn, function(req, res) {
+   app.get('/about', function(req, res) {
         res.render('about.jade', {
             user : req.user // get the user out of session and pass to template
         });
@@ -80,6 +80,12 @@ module.exports = function(app, passport) {
 
    app.get('/profile', function(req, res) {
         res.render('profile.jade', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
+
+   app.get('/format_test', function(req, res) {
+        res.render('format_test.jade', {
             user : req.user // get the user out of session and pass to template
         });
     });

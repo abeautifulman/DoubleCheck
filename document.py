@@ -41,17 +41,11 @@ class Document():
 
 	TODO: 
 	- [ ] change all print statements to logs
-	- [x] support for .pdf, .doc, .docx, and .odt
-	- [x] support for .txt
-	- [x] sentence tokenize
 	- [ ] paragraph tokenize !!!
-	- [x] part of speech tagging
 	- [/] writing document to database -- what to include? everything?
 	- [ ] LSA? lsa.colorado.edu?
 	- [ ] word similarity matrix
-	- [x] firebase
 	- [ ] word2vec!!   https://radimrehurek.com/gensim/models/word2vec.html --> class gensim.models.word2vec.Word2Vec: Class for training, using and evaluating neural networks described in https://code.google.com/p/word2vec/
-	- [ ] wikipedia dumps? (Already have AA through BC... might want to find precompiled set? takes many days to parse all pages from compressed archive)
 	- [ ] bigram transformer (process phrases like words) !!
 	- [ ] 
 		.
@@ -59,7 +53,7 @@ class Document():
 		.
 	'''
 	# establish connection to firebase
-	database = firebase.FirebaseApplication('https://grademebaby.firebaseio.com/', None)
+	database = firebase.FirebaseApplication('https://doublecheckproject.firebaseio.com/', None)
 
 	# we might want to train the tokenizer on the format of the input text using PunktSentenceTokenizer(text)
 	# these split the document into sentences
@@ -149,7 +143,8 @@ class Document():
 		json_entry = json.dumps(err2db, sort_keys=True, indent=4)
 		#self.database.put('/documents/' + self.author + "/" + self.filename + "/proofread/", err2db) 
 		#self.database.put(err2db) 
-		result = self.database.post('/proofreads/' + self.author + '/' + self.filename + '/', err2db)
+                print err2db
+		result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
 		
 
 	def vectorize(self):
@@ -157,7 +152,7 @@ class Document():
 		#sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip()) # use raw text
 		sentences = Topic(raw_input('topic: ')).text
 		#stoplist  = set('for this that by or is a of the and to in are be as an it can on if at which then also with used such not from use other have some these more using has many one was may often but their they than when been its not all may some have had'.split())
-		texts     = [[word for word in sentence.lower().split() if word not in self.stoplist] for sentence in sentences]
+		texts     = [[word for word in sentence.lower().split() if word not in self.stopwords] for sentence in sentences]
 		
 		# compute the frequency of each token
 		frequency = defaultdict(int)
@@ -219,8 +214,8 @@ def main():
 		doc.stats        = user_files[name].keys()[0]['stats']
 		'''
 	else:
-		print "NOT converting document to raw text..."
-		#doc.document_to_text(doc.filename, doc.filename)
+		print "converting document to raw text..."
+		doc.document_to_text(doc.filename, doc.filename)
 		print "proofreading the document..."
 		doc.proofread()
 		print "NOT vectorizing text and performing LDA..."

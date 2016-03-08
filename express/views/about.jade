@@ -1,0 +1,34 @@
+include mixins
++nav("DoubleCheck", "dropdown_menu", "fixed-top")
+    +nav_item( "index.html", "active" ) Home
+    +nav_item( "about.html" ) About
+    +nav_item( "contact.html" ) Contact
+    +nav_item_dropdown( "#" )( label="Dropdown")
+        +nav_item( "#" ) Action
+        +nav_item( "#" ) Another action
+        +nav_item( "#" ) Something else here
+        +nav_divider
+        +nav_header Nav header
+        +nav_item( "#" ) Separated link
+        +nav_item( "#" ) One more separated link
+html
+  head
+    link(href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css', rel="stylesheet") 
+    link(rel='stylesheet', href='css/dropzone.css')
+    script(type='text/javascript', src='js/dropzone.js')
+  body
+    div.container
+      h1 Everyone makes mistakes. 
+      h3 DoubleCheck helps you make less.
+      div.jumbotron
+        ul.list-group
+          li.list-group-item
+            span.badge 14
+              | Essays Processed
+          li.list-group-item
+            span.badge 2
+              | Dapibus ac facilisis in
+          li.list-group-item
+            span.badge 1
+              | Morbi leo risus
+ 
