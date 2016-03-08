@@ -1,4 +1,9 @@
 //extends layout
+html
+    body
+        script(src='/socket.io/socket.io.js')
+        script.
+            var socket = io();
 block content
   pook-flash
   link(href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css', rel="stylesheet") 
@@ -6,4 +11,5 @@ block content
   script.
     "use strict";
     var firebase = new Firebase('https://doublecheckproject.firebaseio.com/');
-
+    var content = firebase.child('content');
+    content.on("value", function(snapshot) { console.log(snapshot.val());});

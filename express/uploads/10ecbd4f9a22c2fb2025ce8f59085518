@@ -1,0 +1,79 @@
+# SCALABILITY
+
+### Load Balancing / High Availability
+
+    - System load = reads + writes
+    - System design scales, not programming languages. All languages can scale well
+
+##### Scaling Up vs Scaling Out
+
+    - IBM LinuxONE (one machine as powerful (and faster) as an entire rack of servers)
+    - Horizontal Scaling - Caches
+                         - Queues
+                         - Distributed reads
+                         - Partitioning
+
+    
+### the system    
+                                   ______________
+                                  | Load Balancer|
+                       ___________|______________|_____________
+                      | Front End | Front End    | Front End   |
+                      |___________|______________|_____________|
+                      | Mem cache | Mem cache    | Mem cache   |
+   ________           |___________|______________|_____________|            
+  | Redis  |          |File Server| File Server  | File Server |         
+  |________|          |___________|______________|_____________|
+  | Worker |                      | Database     |
+  |________|                      |______________|
+                                  | Read Replica |
+                                  |______________|
+                                                                     _________________________________________
+                                                                    | Master DB 1 | Master DB 2 | Master DB 3 |
+                                                                    |_____________|_____________|_____________|
+                                                                    |             |             |             |
+                                                                    |_____________|_____________|_____________|
+                                                                    |             |             |             |
+                                                                    |_____________|_____________|_____________|
+
+    - $ dig yahoo.com (DNS LOOKUP)
+    - mem cache stores db in RAM
+    - queues 
+        - decouple producers from consumers
+    - redis
+        - have to move expensive operations off of the front end (like sending email)
+        - the worker jobs will process the queue when convenient
+    
+    - have to distribute reads and writes
+        - much more reads than writes
+
+    - HTTP GET is IDEMPOTENT
+        - idempotence
+            - may run many times, yielding same result -- no side effects
+                - f(f(x)) = f(x)
+                - abs(abs(x)) = abs(x)
+        ____________________________
+       |    GET /profile            | <-- get is idempotent
+       |             |              |
+       |             \/             |
+       |        Front End           |
+       |              \             |
+       |               \/           |
+       |    Master     Read Replica | <--- Spreading IO out
+       |____________________________|
+       |                            |
+       |    POST /profile           | <-- post is not idempotent
+       |             |              |
+       |             \/             |
+       |        Front End           |
+       |         /                  |
+       |       \/                   |
+       |    Master     Read Replica | <-- has to go to master
+       |____________________________|
+
+    - write load partitioning  
+        - starwars battlefront!! >20mil ppl playing, thousands of map servers
+        - partition key techniques
+            hash(key) % partition_count = partition_id  <-- i.e. key=username
+    - shared nothing architecture
+        - nodes don't have to know about eachother

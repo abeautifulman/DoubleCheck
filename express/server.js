@@ -18,6 +18,10 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
+// socket.io
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
@@ -37,8 +41,20 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// socket.io
+io.on('connection', function(socket){
+      console.log('a user connected');
+});
+
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+// file uploads ================================================================
+var multer =  require( 'multer' );
+var upload = multer( { dest: 'uploads/' } );
+app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
+        return res.status( 200 ).send( req.file );  
+});
 
 // launch ======================================================================
 app.listen(port);
