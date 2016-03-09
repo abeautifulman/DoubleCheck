@@ -90,6 +90,12 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/animations', function(req, res) {
+        res.render('animations.jade', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================
