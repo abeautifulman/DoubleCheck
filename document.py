@@ -20,7 +20,7 @@ from cStringIO          import StringIO
 import ATD
 
 # natural language processing
-from nltk        import data, tokenize, pos_tag
+from nltk        import data, tokenize, pos_tag, ne_chunk
 from gensim      import corpora, models, similarities
 from collections import defaultdict
 
@@ -121,7 +121,7 @@ class Document():
 				self.raw = file_.read()
 
 	def proofread(self):
-		 # our API key for AfterTheDeadline
+                # our API key for AfterTheDeadline
 		ATD.setDefaultKey(hash("DoubleCheck")) 
 
 		# check the document for grammar and spelling errors 	
@@ -185,8 +185,14 @@ class Document():
 		tokens    = [self.tokenizer.tokenize(sentence) for sentence in sentences]		
 		pos       = [pos_tag(token) for token in tokens]
 		
-		# final format includes 1) token, 2) lemma, and 3) list of part of speech tags		
-		pos = [[(word, word, [postag]) for (word, postag) in sentence] for sentence in pos]		
+                # named entity recognition
+                for tagged_sentence in pos:
+                        named_entity = ne_chunk(tagged_sentence)
+                        print named_entity
+                        named_entity.draw()
+
+		# final format should include 1) token, 2) lemma, and 3) list of part of speech tags		
+		pos = [[(word, [postag]) for (word, postag) in sentence] for sentence in pos]		
 
 		self.preprocessed = { 'sentences': sentences,
 				      'tokens'   : tokens,
@@ -216,12 +222,12 @@ def main():
 	else:
 		print "converting document to raw text..."
 		doc.document_to_text(doc.filename, doc.filename)
-		print "proofreading the document..."
-		doc.proofread()
+		print "NOT proofreading the document..."
+		#doc.proofread()
 		print "NOT vectorizing text and performing LDA..."
 		#doc.vectorize() # must be called after document_to_test
-		print "NOT preprocessing raw text..."
-		#doc.preprocess_text()
+		print "preprocessing raw text..."
+		doc.preprocess_text()
 		print "NOT getting document statistics..."
 		#doc.statistics()
 		print "NOT writing document to database..."
