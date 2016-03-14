@@ -1631,7 +1631,7 @@
 	width: 120px;
 	height: 100%;
 	pointer-events: none;
-	border: 2px solid #d94f5c;
+	border: 2px solid #6b4c75;
 	border-width: 2px 0;
 	-webkit-transition: -webkit-transform 0.5s 0.2s;
 	transition: transform 0.5s 0.2s;
@@ -2107,7 +2107,7 @@
 }
 
 .menu--horatio .menu__item:hover {
-	color: #d94f5c;
+	color: #6b4c75;
 }
 
 .menu--horatio .menu__item::before,

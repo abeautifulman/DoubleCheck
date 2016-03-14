@@ -1,44 +1,13 @@
 var Firebase = require("firebase");
-var buttons  = new Firebase('https://marsoasis.firebaseio.com/buttons');
+var Queue  = new Firebase('https://marsoasis.firebaseio.com/queue');
 
 // folders
-var system_control         = buttons.child("system_control");
-var water_flow             = buttons.child("water_flow");
-var water_conditioning     = buttons.child("water_conditioning");
-var atmospheric_management = buttons.child("atmospheric_management");
-var system_maintenance     = buttons.child("system_maintenance");
+var essays = buttons.child("essays");
 
-// system control buttons
-var BeagleBone = document.getElementById('BeagleBone-switch');
-var Autopilot  = document.getElementById('Autopilot-switch');
+// buttons
+var DoubleCheckMe = document.getElementById('DoubleCheckMe')
 
-// water flow buttons
-var MainTankPump       = document.getElementById('MainTankPump-switch');
-var CondensateTankPump = document.getElementById('CondensateTankPump-switch');
-var LeachateTankPump   = document.getElementById('LeachateTankPump-switch');
-
-// water conditioning buttons
-var WaterHeater     = document.getElementById('WaterHeater-switch');
-var WaterChiller    = document.getElementById('WaterChiller-switch');
-var Nutrient1Dosing = document.getElementById('Nutrient1Dosing-switch');
-var Nutrient2Dosing = document.getElementById('Nutrient2Dosing-switch');
-var phDosing        = document.getElementById('phDosing-switch');
-
-// atmospheric management buttons
-var HumidifierMisterPump = document.getElementById('HumidifierMisterPump-switch');
-var DehumidifierAirPump  = document.getElementById('DehumidifierAirPump-switch');
-var O2Concentrator       = document.getElementById('O2Concentrator-switch');
-var CO2GasSolenoid       = document.getElementById('CO2GasSolenoid-switch');
-var N2GasSolenoid        = document.getElementById('N2GasSolenoid-switch');
-
-// system maintenance buttons
-var MainTankCirculation      = document.getElementById('MainTankCirculation-switch');
-var MainTankAirBubbler       = document.getElementById('MainTankAirBubbler-switch');
-var NutrientTank1Circulation = document.getElementById('NutrientTank1Circulation-switch');
-var NutrientTank2Circulation = document.getElementById('NutrientTank2Circulation-switch');
-var UVFilter                 = document.getElementById('UVFilter-switch');
-
-// beaglebone switch asynchronous callback
+// asynchronous callback
 var beaglebone_switch = system_control.child("BeagleBone");
 beaglebone_switch.on("value", function(snapshot) {
   if (snapshot.val() == true) {
@@ -53,7 +22,7 @@ beaglebone_switch.on("value", function(snapshot) {
   console.log(BeagleBone)
 });
 
-// system control handlers
+// handlers
 BeagleBone.onchange = function() {
   system_control.set({
     "BeagleBone": BeagleBone.checked,

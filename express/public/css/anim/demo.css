@@ -191,7 +191,7 @@ a:focus {
 
 .section:nth-of-type(odd):not(:first-child) {
 	color: #fff;
-	background: #2a282b;
+	background: #96abb3;
 }
 
 .section--menu {
@@ -216,7 +216,7 @@ a:focus {
 	text-indent: 3px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #d1d1d1;
+	color: #1e2e4d;
 }
 
 .break__title {
@@ -231,7 +231,7 @@ a:focus {
 	position: relative;
 	min-height: 100vh;
 	text-align: center;
-	color: #fff;
+	color: #1e2e4d;
 }
 
 .section--intro p {
@@ -248,7 +248,7 @@ a:focus {
 	padding: 0em 1em 4em;
 	text-align: center;
 	color: #fff;
-	background: #878192 url(../img/anim/mouse.svg) no-repeat left 50% bottom 40px;
+	background: #383838 url(../img/anim/mouse.svg) no-repeat left 50% bottom 40px;
 }
 
 .codrops-header h1 {
@@ -267,7 +267,7 @@ a:focus {
 	display: block;
 	margin: 0.5em 0;
 	letter-spacing: 0;
-	color: #f48b95;
+	color: #96abb3;
 }
 
 /* Top Navigation Style */
@@ -341,7 +341,16 @@ a:focus {
 	font-weight: bold;
 	padding: 10em 1em;
 	text-align: center;
-	background: #d94f5c;
+	background: #6b4c75;
+}
+
+.content--related h1 {
+	font-size: 100%;
+	font-weight: normal;
+	display: block;
+	margin: 0.5em 0;
+	letter-spacing: 0;
+	color: #FFFFFF;
 }
 
 .content__wrap--related {

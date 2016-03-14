@@ -2,6 +2,7 @@
 
 // set up ======================================================================
 // get all the tools we need
+var firebase = require('firebase');
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8080;
@@ -52,8 +53,10 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // file uploads ================================================================
 var multer =  require( 'multer' );
 var upload = multer( { dest: 'uploads/' } );
+var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
 app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
-        return res.status( 200 ).send( req.file );  
+       essays.push(req.file);
+       return res.status( 200 ).send( req.file );  
 });
 
 // launch ======================================================================

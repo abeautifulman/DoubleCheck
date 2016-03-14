@@ -54,23 +54,6 @@ module.exports = function(app, passport) {
             user : req.user // get the user out of session and pass to template
         });
     });
-    app.get('/control', function(req, res) {
-        res.render('control.jade', {
-            user : req.user // get the user out of session and pass to template
-        });
-    });
-
-    app.get('/status', isLoggedIn, function(req, res) {
-        res.render('status.jade', {
-            user : req.user // get the user out of session and pass to template
-        });
-    });
-
-    app.get('/info', isLoggedIn, function(req, res) {
-        res.render('data.jade', {
-            user : req.user // get the user out of session and pass to template
-        });
-    });
 
    app.get('/about', function(req, res) {
         res.render('about.jade', {
@@ -84,8 +67,8 @@ module.exports = function(app, passport) {
         });
     });
 
-   app.get('/format_test', function(req, res) {
-        res.render('format_test.jade', {
+   app.get('/modals', function(req, res) {
+        res.render('modal_example.jade', {
             user : req.user // get the user out of session and pass to template
         });
     });
