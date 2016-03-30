@@ -12,6 +12,9 @@ html.no-js(lang='en')
     link(rel='stylesheet', type='text/css', href='css/anim/normalize.css')
     link(rel='stylesheet', type='text/css', href='css/anim/demo.css')
     link(rel='stylesheet', type='text/css', href='css/anim/component.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='css/dropzone.css')
+    script(type='text/javascript', src='js/dropzone.js')
     //if IE
       script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
     script(src='/js/anim/vivus.min.js')
@@ -45,7 +48,7 @@ html.no-js(lang='en')
         h2.section__title Check it out bru
         span.link-copy
         nav.menu.menu--horatio
-          button.md-trigger(data-modal='modal-12') Yo
+          // button.md-trigger(data-modal='modal-12') Yo
           ul.menu__list
             li.menu__item.menu__item--current
               a.menu__link(href='#', id='DoubleCheckMe') Upload an Essay
@@ -56,9 +59,11 @@ html.no-js(lang='en')
         //p.info
           | Style created by 
           a(href='https://jamessteinbach.com') James Steinbach 
+      section.section
+        form#upload-widget.dropzone(method='post', action='/upload')
       section.content.content--related
         h1 Thanks for visiting
-
+        i.fa.fa-hand-peace-o.fa-2x(style='color:white')
     // /container
     script(src='js/anim/classie.js')
     script(src='js/anim/clipboard.min.js')

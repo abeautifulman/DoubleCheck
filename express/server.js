@@ -51,12 +51,32 @@ io.on('connection', function(socket){
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // file uploads ================================================================
-var multer =  require( 'multer' );
+function readTextFile(file)
+    {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    var allText = rawFile.responseText;
+                    alert(allText);
+                }
+            }
+        }
+    rawFile.send(null);
+}
+
+
+var multer = require( 'multer' );
 var upload = multer( { dest: 'uploads/' } );
 var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
 app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
-       essays.push(req.file);
-       return res.status( 200 ).send( req.file );  
+    readTextFile(req.file.path); //need to append file://
+    essays.push(req.file);
+    return res.status( 200 ).send( req.file );
 });
 
 // launch ======================================================================

@@ -191,10 +191,11 @@ a:focus {
 
 .section:nth-of-type(odd):not(:first-child) {
 	color: #fff;
-	background: #96abb3;
+	background: #984447;
 }
 
 .section--menu {
+	background: #ADD9F4;
 	position: relative;
 	overflow: hidden;
 	min-height: 80vh;
@@ -208,7 +209,7 @@ a:focus {
 }
 
 .section__title {
-	font-size: 0.65em;
+	font-size: 1em;
 	font-weight: 700;
 	-webkit-flex: none;
 	flex: none;
@@ -216,7 +217,7 @@ a:focus {
 	text-indent: 3px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #1e2e4d;
+	color: #984447;
 }
 
 .break__title {
@@ -227,7 +228,7 @@ a:focus {
 }
 
 .section--intro {
-	font-size: 2em;
+	font-size: 2.5em;
 	position: relative;
 	min-height: 100vh;
 	text-align: center;
@@ -267,7 +268,7 @@ a:focus {
 	display: block;
 	margin: 0.5em 0;
 	letter-spacing: 0;
-	color: #96abb3;
+	color: #984447;
 }
 
 /* Top Navigation Style */
@@ -341,7 +342,7 @@ a:focus {
 	font-weight: bold;
 	padding: 10em 1em;
 	text-align: center;
-	background: #6b4c75;
+	background: #476C9B;
 }
 
 .content--related h1 {
