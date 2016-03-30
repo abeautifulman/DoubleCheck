@@ -23,28 +23,16 @@ router.post('/signup', function(req, res) {
   var last     = req.body.lastName;
   var username = req.body.username;
   var password = req.body.password;
-  var group    = req.body.group;
-  var code     = req.body.access_code;
 
   // Grab user fields.
   if (!username || !password || !group) {
     return res.render('signup', { title: 'Signup', error: 'Email and password required.' });
   }
 
-  if (group == 'NASA' && code != 'NOKEN312') {
-
-    return res.render('signup', { title: 'Signup', error: 'Invalid access token for NASA.' });
-    }
-
-  if (group == 'Dev' && code != 'AlphA42689') {
-
-    return res.render('signup', { title: 'Signup', error: 'Invalid access token for Dev.' });
-    }
-
   // Initialize our Stormpath client.
   var apiKey = new stormpath.ApiKey(
-    process.env['STORMPATH_APIKEY_ID'],
-    process.env['STORMPATH_APIKEY_SECRET']
+    process.env['STORMPATH_API_KEY_ID'],
+    process.env['STORMPATH_API_KEY_SECRET']
   );
   var spClient = new stormpath.Client({ apiKey: apiKey });
 
@@ -63,16 +51,7 @@ router.post('/signup', function(req, res) {
       if (err) {
         return res.render('signup', {'title': 'Signup', error: err.userMessage });
       } else {
-          app.getGroups({ name: group }, function(err, groups) {
-            groups.each(function(group, cb) {
-              group.addAccount(createdAccount, function(err, membership) {
-              console.log(membership);
-              });
-            console.log('group:', group);
-            cb();
-            }, function(err) {
-          console.log('Finished iterating over groups.');
-          // post to firebase
+          console.log("acount created successfully!");
           });
          });
 
@@ -80,7 +59,7 @@ router.post('/signup', function(req, res) {
 
         passport.authenticate('stormpath')(req, res, function () {
         console.log(createdAccount);
-          return res.redirect('/dashboard');
+          return res.redirect('/profile');
         });
       }
     });
@@ -108,7 +87,7 @@ router.post(
   passport.authenticate(
     'stormpath',
     {
-      successRedirect: '/dashboard',
+      successRedirect: '/profile',
       failureRedirect: '/login',
       failureFlash: 'Invalid email or password.',
     }
@@ -116,14 +95,14 @@ router.post(
 );
 
 
-// Render the dashboard page.
-router.get('/dashboard', function (req, res) {
+// Render the profile page.
+router.get('/profile', function (req, res) {
   if (!req.user || req.user.status !== 'ENABLED') {
     return res.redirect('/login');
   }
 
-  res.render('dashboard', {
-    title: 'Dashboard',
+  res.render('profile', {
+    title: 'Profile',
     user: req.user
     }
   );
