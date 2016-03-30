@@ -25,22 +25,22 @@ var StormpathStrategy = require('passport-stormpath');
 var stormpath = require('express-stormpath');
 
 
-var strategy = new StormpathStrategy();
-passport.use(strategy);
-passport.serializeUser(strategy.serializeUser);
-passport.deserializeUser(strategy.deserializeUser);
+//var strategy = new StormpathStrategy();
+//passport.use(strategy);
+//passport.serializeUser(strategy.serializeUser);
+//passport.deserializeUser(strategy.deserializeUser);
 
 
 
 // configuration ===============================================================
 
-require('./config/passport')(passport); // pass passport for configuration
+//require('./config/passport')(passport); // pass passport for configuration
 // required for passport
-app.use(session({
-    secret: process.env.EXPRESS_SECRET,
-    key: 'sid',
-    cookie: {secure: false},
-}));
+//app.use(session({
+//    secret: process.env.EXPRESS_SECRET,
+//    key: 'sid',
+//    cookie: {secure: false},
+//}));
 
 
 // set up our express application
@@ -56,9 +56,9 @@ app.set('view engine', 'jade'); // set up jade for templating
 app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
+//app.use(flash()); // use connect-flash for flash messages stored in session
 
 // socket.io
 io.on('connection', function(socket){
@@ -76,12 +76,22 @@ app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 
 // routes ======================================================================
 var index_routes = require('./routes/index');
-var auth_routes = require('./routes/auth');
+//var auth_routes = require('./routes/auth');
 app.use('/', index_routes);
-app.use('/', auth_routes);
+//app.use('/', auth_routes);
 
 
 app.use(stormpath.init(app, {
+
+ client: {
+    apiKey: {
+      id: 'Q96OGT18UOAYU0BO6WX4R1LHX',
+      secret: '6t+fi3Rj/DwzEqxr8aiumYFbywrW7ipUAi0cahR62h8',
+    }
+  },
+  application: {
+    href: 'https://api.stormpath.com/v1/applications/3ehSoEnPsbwDAm9wvwQwpu'
+  },
 
   web: {
     login: {
@@ -97,7 +107,7 @@ app.use(stormpath.init(app, {
       enabled: false
     },
     register: {
-      enabled: false
+      enabled: true
     }
   },
   expandCustomData: true

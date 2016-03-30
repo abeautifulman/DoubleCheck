@@ -55,8 +55,6 @@ router.post('/signup', function(req, res) {
           });
          });
 
-
-
         passport.authenticate('stormpath')(req, res, function () {
         console.log(createdAccount);
           return res.redirect('/profile');
