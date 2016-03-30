@@ -1,3 +1,4 @@
+extends ./parts/layout.jade
 include mixins
 +nav("DoubleCheck", "dropdown_menu", "fixed-top")
     +nav_item( "index", "active" ) Home
@@ -13,9 +14,6 @@ include mixins
         +nav_item( "#" ) One more separated link
 html
   head
-    link(href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css', rel="stylesheet") 
-    link(rel='stylesheet', href='css/dropzone.css')
-    script(type='text/javascript', src='js/dropzone.js')
   body
     div.container
       div.jumbotron
