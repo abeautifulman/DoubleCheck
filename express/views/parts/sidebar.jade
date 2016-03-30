@@ -1,283 +1,35 @@
-.sidebar
-    .quickmenu
-        .quickmenu__cont
-            .quickmenu__list
-                .quickmenu__item(class=page!='Sent' && page!='Inbox' && page!='Compose' ? 'active' : '')
-                    .fa.fa-fw.fa-home
-                .quickmenu__item(class=page=='Sent' || page=='Inbox' || page=='Compose' ? 'active' : '')
-                    .fa.fa-fw.fa-area-chart
-                .quickmenu__item.new
-                    .fa.fa-fw.fa-warning
-                .quickmenu__item
-                    .fa.fa-fw.fa-feed
-                .quickmenu__item
-                    .fa.fa-fw.fa-wrench
-    .scrollable.scrollbar-macosx
-        .sidebar__cont
-            .sidebar__menu
-                .sidebar__title System Overview
-                ul.nav.nav-menu
-                    li(class=page=='Dashboard' ? 'active' : '')
-                        a(href="/dashboard")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-star
-                            .nav-menu__text
-                                span Dashboard
-                    li(class=page=='Control' ? 'active' : '')
-                        a(href="/control")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-cube
-                            .nav-menu__text
-                                span Control 
-                    li(class=page=='Status' ? 'active opened' : '')
-                        a(href="/status")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-envelope
-                            .nav-menu__text
-                                span Status 
-                            .nav-menu__right
-                    li(class=page=='Data' ? 'active' : '')
-                        a(href="/info")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-truck
-                            .nav-menu__text
-                                span Data 
-                    li(class=page=='About' ? 'active' : '')
-                        a(href="/about")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-user
-                            .nav-menu__text
-                                span About 
-            .sidebar__menu
-                .sidebar__btn
-                    a.btn.btn-block.btn-default(href='compose.html') Compose Mail
-                .sidebar__title Mail
-                ul.nav.nav-menu
-                    li(class=page == 'Inbox' ? 'active' : '')
-                        a(href="inbox.html")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-inbox
-                            .nav-menu__text
-                                span Inbox
-                            .nav-menu__right
-                                i.badge.badge-default <b>2</b> / 100
-                    li(class=page == 'Sent' ? 'active' : '')
-                        a(href="sent.html")
-                            .nav-menu__ico
-                                i.fa.fa-fw.fa-upload
-                            .nav-menu__text
-                                span Sent
-                            .nav-menu__right
-                                i.badge.badge-default 30
-                .sidebar__title Tags
-                .ul.nav.nav-menu
-                    li
-                        a(href="inbox.html")
-                            .nav-menu__ico.tag_clients
-                                i.fa.fa-fw.fa-tag
-                            .nav-menu__text
-                                span Clients
-                    li
-                        a(href="inbox.html")
-                            .nav-menu__ico.tag_social
-                                i.fa.fa-fw.fa-tag
-                            .nav-menu__text
-                                span Social
-                    li
-                        a(href="inbox.html")
-                            .nav-menu__ico.tag_support
-                                i.fa.fa-fw.fa-tag
-                            .nav-menu__text
-                                span Support
-            .sidebar__menu
-                .sidebar__title New Warnings
-                .lm-widget
-                    .lm-widget__list
-                        .lm-widget__item.new
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_support
-                                span Support
-                            .lm-widget__text
-                                | Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item.new
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_clients
-                                span Stephen Olson
-                            .lm-widget__text
-                                | Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue.
-                            a.lm-widget__link(href='inbox.html')
-                .sidebar__title Recent Warnings
-                .lm-widget
-                    .lm-widget__list
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_social
-                                span Jesse Shaw
-                            .lm-widget__text
-                                | Nam ultrices, libero non mattis pulvinar.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag
-                                span Mary Payne
-                            .lm-widget__text
-                                | Vivamus tortor. Duis mattis egestas metus.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag
-                                span Bob Romero
-                            .lm-widget__text
-                                | Morbi porttitor lorem id ligula.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_social
-                                span Kevin Hosser
-                            .lm-widget__text
-                                | Libero non mattis pulvinar.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_clients
-                                span Perry Winter
-                            .lm-widget__text
-                                | Tortor. Duis mattis egestas metus.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_support
-                                span Ivan Nemirov
-                            .lm-widget__text
-                                | Portitor lorem id ligula.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag
-                                span Jonny Fount
-                            .lm-widget__text
-                                | Lorem id ligula morbi porttitor .
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag
-                                span Hue Logan
-                            .lm-widget__text
-                                | Pulvinar libero non mattis.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_clients
-                                span Summer Gordon
-                            .lm-widget__text
-                                | Hattis tortor. Duis egestas metus.
-                            a.lm-widget__link(href='inbox.html')
-                        .lm-widget__item
-                            .lm-widget__title
-                                i.fa.fa-fw.fa-tag.tag_support
-                                span Sonya Blade
-                            .lm-widget__text
-                                | Itor lorem id ligula.
-                            a.lm-widget__link(href='inbox.html')
-            .sidebar__menu
-                .sidebar__title Recent activity
-                .ra-widget
-                    .ra-widget__cont
-                        .ra-widget__list
-                            .ra-widget__item.ra-widget__item_user
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | <a href='./'>Gary Long</a> has registered.
-                                        span.ra-widget__date 09:20
-                            .ra-widget__item.ra-widget__item_product
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | New product <a href='./'>Sony PlayStation 4</a>.
-                                        span.ra-widget__date 10:08
-                            .ra-widget__item.ra-widget__item_order
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | Order <a href='./'>#35108243</a>.
-                                        span.ra-widget__date Jan 28, 09:42
-                            .ra-widget__item.ra-widget__item_subscriber
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | <a href='./'>Julie Payne</a> subscribed to news.
-                                        span.ra-widget__date Jan 28, 18:06
-                            .ra-widget__item.ra-widget__item_mail
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | 30 letters was sent.
-                                        span.ra-widget__date Jan 27, 03:08
-                            .ra-widget__item.ra-widget__item_order
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | Order <a href='./'>#35597433</a>.
-                                        span.ra-widget__date Jan 26, 19:02
-                            .ra-widget__item.ra-widget__item_payment
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | $385 incoming payment.
-                                        span.ra-widget__date Jan 26, 18:06
-                            .ra-widget__item.ra-widget__item_payment
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | $2824 incoming payment.
-                                        span.ra-widget__date Jan 26, 09:11
-                            .ra-widget__item.ra-widget__item_subscriber
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | <a href='./'>Greg Bush</a> subscribed to news.
-                                        span.ra-widget__date Jan 26, 05:36
-                            .ra-widget__item.ra-widget__item_product
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | New product <a href='./'>Shoober</a>.
-                                        span.ra-widget__date Jan 25, 23:19
-                            .ra-widget__item.ra-widget__item_order
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | Order <a href='./'>#31248769</a>.
-                                        span.ra-widget__date Jan 25, 16:51
-                            .ra-widget__item.ra-widget__item_payment
-                                .ra-widget__ico
-                                    i.fa.fa-fw
-                                .ra-widget__info
-                                    .ra-widget__text
-                                        | $3205 incoming payment.
-                                        span.ra-widget__date Jan 25, 10:44
-            .sidebar__menu
-                .sidebar__title Settings
-                .ss-widget
-                    .ss-widget__cont
-                        .ss-widget__row
-                            .ss-widget__cell BeagleBone
-                            .ss-widget__cell
-                                input.bs-switch(type='checkbox', checked='checked', data-size="micro", data-on-color="success", data-off-color="danger")
-                        .ss-widget__row
-                            .ss-widget__cell Autopilot
-                            .ss-widget__cell
-                                input.bs-switch(type='checkbox', data-size="micro", data-on-color="success", data-off-color="danger")
+.collapse.navbar-collapse.navbar-ex1-collapse
+  ul.nav.navbar-nav.side-nav
+    li.active
+      a(href='index.html')
+        i.fa.fa-fw.fa-dashboard
+          |  Dashboard
+    li
+      a(href='charts.html')
+        i.fa.fa-fw.fa-bar-chart-o
+          |  Charts
+    li
+      a(href='tables.html')
+        i.fa.fa-fw.fa-table
+          |  Tables
+    li
+      a(href='forms.html')
+        i.fa.fa-fw.fa-edit
+          |  Forms
+    li
+      a(href='bootstrap-elements.html')
+        i.fa.fa-fw.fa-desktop
+          |  Bootstrap Elements
+    li
+      a(href='bootstrap-grid.html')
+        i.fa.fa-fw.fa-wrench
+          |  Bootstrap Grid
+    li
+      a(href='blank-page.html')
+        i.fa.fa-fw.fa-file
+          |  Blank Page
+    li
+      a(href='index-rtl.html')
+        i.fa.fa-fw.fa-dashboard
+          |  RTL Dashboard
+        // /.navbar-collapse
