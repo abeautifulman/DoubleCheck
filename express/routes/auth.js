@@ -43,8 +43,8 @@ router.post('/signup', function(req, res) {
 
   // Initialize our Stormpath client.
   var apiKey = new stormpath.ApiKey(
-    process.env['STORMPATH_API_KEY_ID'],
-    process.env['STORMPATH_API_KEY_SECRET']
+    process.env['STORMPATH_APIKEY_ID'],
+    process.env['STORMPATH_APIKEY_SECRET']
   );
   var spClient = new stormpath.Client({ apiKey: apiKey });
 
