@@ -115,16 +115,16 @@ app.use(stormpath.init(app, {
 
   web: {
     login: {
-      enabled: false
+      enabled: true
     },
     logout: {
-      enabled: false
+      enabled: true
     },
     me: {
-      enabled: false
+      enabled: true
     },
     oauth2: {
-      enabled: false
+      enabled: true
     },
     register: {
       enabled: true
