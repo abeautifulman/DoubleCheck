@@ -27,20 +27,21 @@ html.no-js(lang='en')
     script(src='/js/anim/vivus.min.js')
     #modal-12.md-modal.md-effect-12
       .md-content
-        h3 Modal Dialog
+        h3 Welcome to DoubleCheck!
         div
-          p This is a modal window. You can do the following things with it:
+          p Upload an essay in the box below.
           ul
             li
-              strong Read:
-              |  modal windows will probably tell you something important so don't forget to read what they say.
-            li
-              strong Look:
-              |  a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.
-            li
-              strong Close:
-              |  click on the button below to close the modal.
-          button.md-close Close me!
+              strong We support documents saved with extensions .doc, .docx, .pdf, .txt, and .odt.
+              |  
+            li 
+              |  Click on the button below to return to the homepage.
+
+
+          form#upload-widget.dropzone(method='post', action='/upload')
+
+
+          button.md-close Take me home!
  
  
   body
@@ -85,7 +86,6 @@ html.no-js(lang='en')
           | Style created by 
           a(href='https://jamessteinbach.com') James Steinbach 
       section.section
-        form#upload-widget.dropzone(method='post', action='/upload')
       section.content.content--related
         h1 Thanks for visiting
         i.fa.fa-hand-peace-o.fa-2x(style='color:white')
