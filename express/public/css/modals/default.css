@@ -19,11 +19,11 @@ body, html { font-size: 100%; padding: 0; margin: 0; }
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
 
-body {
+/*body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	color: #fff;
 	background: #e74c3c;
-}
+}*/
 
 a {
 	color: #c0392b;
@@ -42,11 +42,11 @@ a:active {
 	padding: 2em;
 }
 
-.container > header {
+/*.container > header {
 	text-align: center;
 	background: #d94839;
 	padding: 3em;
-}
+}*/
 
 .container > header h1 {
 	font-size: 2.625em;
@@ -162,7 +162,7 @@ button:hover {
 		width: 100%;
 		min-width: auto;
 		min-height: auto;
-		padding: 1em; 
+		padding: 1em;
 	}
 
 	.column p {
