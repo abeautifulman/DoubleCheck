@@ -79,7 +79,7 @@ class Document():
 		device      = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
 		fp          = file(path, 'rb')
 		interpreter = PDFPageInterpreter(rsrcmgr, device)
-		password    = ""
+        	password    = ""
 		maxpages    = 0
 		caching     = True
 		pagenos     = set()
@@ -143,9 +143,9 @@ class Document():
 		json_entry = json.dumps(err2db, sort_keys=True, indent=4)
 		#self.database.put('/documents/' + self.author + "/" + self.filename + "/proofread/", err2db) 
 		#self.database.put(err2db) 
-                print err2db
-		result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
-		
+                #print err2db
+		#result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
+		return err2db
 
 	def vectorize(self):
 		# tokenize and remove stopwords
@@ -181,15 +181,20 @@ class Document():
        		pyLDAvis.show(vis_data)
 
 	def preprocess_text(self):
-		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
+		'''
+                removed a lot of awesome functionality from this fcn for training...
+                need to add it back in!
+                '''
+                sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
 		tokens    = [self.tokenizer.tokenize(sentence) for sentence in sentences]		
-		pos       = [pos_tag(token) for token in tokens]
+		'''
+                pos       = [pos_tag(token) for token in tokens]
 		
                 # named entity recognition
                 for tagged_sentence in pos:
                         named_entity = ne_chunk(tagged_sentence)
-                        print named_entity
-                        named_entity.draw()
+                        #print named_entity
+                        #named_entity.draw()
 
 		# final format should include 1) token, 2) lemma, and 3) list of part of speech tags		
 		pos = [[(word, [postag]) for (word, postag) in sentence] for sentence in pos]		
@@ -197,10 +202,13 @@ class Document():
 		self.preprocessed = { 'sentences': sentences,
 				      'tokens'   : tokens,
 				      'pos'      : pos }
+                '''
+                self.preprocessed = { 'sentences': sentences,
+                                      'tokens'   : tokens }
 
 	def statistics(self):
 		self.stats['sentences'] = len(self.preprocessed['sentences'])
-		self.stats['tokens']    = len(self.preprocessed['tokens'])
+		self.stats['tokens']    = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
 
 def main():
 	user     = raw_input('user: ')
@@ -210,7 +218,7 @@ def main():
 	doc = Document(filename, user)
 
 	# check to see if the file is already in the database
-	user_files = doc.database.get('/documents/' + user, None)
+        #user_files = doc.database.get('/documents/' + user, None)
 	debug = True
 	if debug == False:  #name in user_files.keys():
 		''' <-- currently broken?
@@ -224,10 +232,10 @@ def main():
 		doc.document_to_text(doc.filename, doc.filename)
 		print "NOT proofreading the document..."
 		#doc.proofread()
-		print "NOT vectorizing text and performing LDA..."
-		#doc.vectorize() # must be called after document_to_test
-		print "preprocessing raw text..."
-		doc.preprocess_text()
+		print "vectorizing text and performing LDA..."
+		doc.vectorize() # must be called after document_to_test
+		print "NOT preprocessing raw text..."
+		#doc.preprocess_text()
 		print "NOT getting document statistics..."
 		#doc.statistics()
 		print "NOT writing document to database..."
