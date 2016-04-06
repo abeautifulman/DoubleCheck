@@ -5,7 +5,7 @@
 var firebase = require('firebase');
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 80;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
@@ -95,11 +95,8 @@ app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 });
 
 // routes ======================================================================
-var index_routes = require('./routes/index');
-//var auth_routes = require('./routes/auth');
-app.use('/', index_routes);
-//app.use('/', auth_routes);
-
+var routes = require('./app/routes');
+app.use('/', routes);
 
 app.use(stormpath.init(app, {
 
