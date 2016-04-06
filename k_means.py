@@ -59,6 +59,20 @@ while run == True:
     if new_grades == grades:
         run = False
 
+
+def reorder_grades(grades):
+    class_vals = {'A': {'sum': 0, 'mean': 0},
+                  'B': {'sum': 0, 'mean': 0},
+                  'C': {'sum': 0}, 'mean': 0},
+                  'D': {'sum': 0}, 'mean': 0},
+                  'F': {'sum': 0, 'mean': 0}
+                 }
+    for grade in grades:
+        class_vals[grade["grade"]]["sum"] += 1
+    
+    for val in class_vals.keys():
+        class_vals[val]["mean"] = class_vals
+final_grades = reorder_grades(classifier.objects)
 with open("training_data/DoubleCheckEssays/grades.json", "w") as grades_json:
     json.dump(classifier.objects, grades_json)
 print "Grades saved!"
