@@ -63,15 +63,24 @@ while run == True:
 def reorder_grades(grades):
     class_vals = {'A': {'sum': 0, 'mean': 0},
                   'B': {'sum': 0, 'mean': 0},
-                  'C': {'sum': 0}, 'mean': 0},
-                  'D': {'sum': 0}, 'mean': 0},
+                  'C': {'sum': 0, 'mean': 0},
+                  'D': {'sum': 0, 'mean': 0},
                   'F': {'sum': 0, 'mean': 0}
                  }
     for grade in grades:
-        class_vals[grade["grade"]]["sum"] += 1
+        class_vals[grade["grade"]]["sum"] += grade['a']+grade['b']+grade['c']
     
     for val in class_vals.keys():
-        class_vals[val]["mean"] = class_vals
+        class_vals[val]["mean"] = class_vals[val]['sum']/len(grades)*3
+
+    class_vals = [(key, class_vals[key]['mean']) for key in class_vals.keys()] 
+    # sort the means
+#    new_grades = sorted(class_vals, key=lambda x: x['mean'])
+    new_grades = {}
+    #new_grades['A'].min(class_vals, key = lambda x: x['mean'])
+    print(class_vals)
+    #print(new_grades)
+
 final_grades = reorder_grades(classifier.objects)
 with open("training_data/DoubleCheckEssays/grades.json", "w") as grades_json:
     json.dump(classifier.objects, grades_json)
