@@ -50,7 +50,6 @@ new_grades = []
 
 run = True
 while run == True:
-    print classifier.iteration
     grades = [obj["grade"] for obj in classifier.objects]
     classifier.update()
     classifier.recompute_centroids()
@@ -76,11 +75,17 @@ def reorder_grades(grades):
     class_vals = [(key, class_vals[key]['mean']) for key in class_vals.keys()] 
     # sort the means
 #    new_grades = sorted(class_vals, key=lambda x: x['mean'])
-    new_grades = {}
-    #new_grades['A'].min(class_vals, key = lambda x: x['mean'])
-    print(class_vals)
-    #print(new_grades)
+    new_grades = sorted(class_vals, key = lambda x: x[1])
+    print(new_grades)
+    correct_grades = ['A','B','C','D','F']
+    for new_grade, mean in new_grades:
+        current_grade = correct_grades.pop(0)
+        for obj in grades:
+            if obj["grade"] == new_grade:
+                obj["grade"] = current_grade
+                obj["cluster_mean"] = mean
 
+    print sorted(grades, key = lambda x: x["grade"])
 final_grades = reorder_grades(classifier.objects)
 with open("training_data/DoubleCheckEssays/grades.json", "w") as grades_json:
     json.dump(classifier.objects, grades_json)
