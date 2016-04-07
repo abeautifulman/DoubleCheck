@@ -70,6 +70,7 @@ class Document():
 		self.raw          = str()    # document as str 
 		self.preprocessed = dict()   # text converted into ( word, lemma, [POS] ) format
 		self.stats        = dict()
+                self.document_to_text(self.filename, self.filename)
 
 	def convert_pdf_to_txt(self, path):
 		rsrcmgr     = PDFResourceManager()
@@ -228,8 +229,8 @@ def main():
 		doc.stats        = user_files[name].keys()[0]['stats']
 		'''
 	else:
-		print "converting document to raw text..."
-		doc.document_to_text(doc.filename, doc.filename)
+		print "converted document to raw text..."
+		#doc.document_to_text(doc.filename, doc.filename)
 		print "NOT proofreading the document..."
 		#doc.proofread()
 		print "vectorizing text and performing LDA..."
