@@ -195,7 +195,7 @@ a:focus {
 }
 
 .section--menu {
-	background: #ADD9F4;
+	background: #449895;
 	position: relative;
 	overflow: hidden;
 	min-height: 80vh;
@@ -264,11 +264,11 @@ a:focus {
 
 .codrops-header h1 span {
 	font-size: 50%;
-	font-weight: normal;
+	font-weight: bold;
 	display: block;
 	margin: 0.5em 0;
 	letter-spacing: 0;
-	color: #984447;
+	color: #449895;  //college essays colors
 }
 
 /* Top Navigation Style */
@@ -342,7 +342,7 @@ a:focus {
 	font-weight: bold;
 	padding: 10em 1em;
 	text-align: center;
-	background: #476C9B;
+	background: #000000;
 }
 
 .content--related h1 {
