@@ -54,8 +54,10 @@ while run == True:
     classifier.update()
     classifier.recompute_centroids()
     classifier.iteration += 1
+    print "iteration:", classifier.iteration, "complete."
     new_grades = [obj["grade"] for obj in classifier.objects]
     if new_grades == grades:
+        print "finished!"
         run = False
 
 
@@ -72,18 +74,18 @@ def reorder_grades(grades):
     for val in class_vals.keys():
         class_vals[val]["mean"] = class_vals[val]['sum']/3
 
-    class_vals = [(key, class_vals[key]['mean']) for key in class_vals.keys()] 
+    class_vals_list = [(key, class_vals[key]['mean']) for key in class_vals.keys()] 
     # sort the means
 #    new_grades = sorted(class_vals, key=lambda x: x['mean'])
-    new_grades = sorted(class_vals, key = lambda x: x[1])
-    print(new_grades)
-    correct_grades = ['A','B','C','D','F']
-    for new_grade, mean in new_grades:
-        current_grade = correct_grades.pop(0)
-        for obj in grades:
-            if obj["grade"] == new_grade:
-                obj["grade"] = current_grade
-                obj["cluster_mean"] = mean
+    new_grades = sorted(class_vals_list, key = lambda x: x[1])
+    correct_grades = ['F','D','C','B','A']
+    transfer_fcn = {}
+    for class_val, mean in new_grades:
+        transfer_fcn[class_val] = correct_grades.pop(0)
+       
+    for obj in grades:
+        obj["grade"] = transfer_fcn[obj["grade"]]
+        obj["cluster_mean"] = class_vals[obj["grade"]]["mean"]
     print sorted(grades, key = lambda x: x["grade"])
     return grades
 

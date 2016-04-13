@@ -17,7 +17,7 @@ class Trainer:
         for dir_ in glob(self.master_dir + "/*"):
             print "\nProcessing", dir_
             for essay in glob(dir_ + "/*"): # essays nested in subdirs
-                if essay not in self.previous_vectors.keys():
+                if essay not in self.essay_vectors.keys():
                     print "\nDoubleChecking", essay 
                     doc = Document(essay, "Wil")
                     doc.document_to_text(essay, essay) # should probably truncate the first "essay" argument to just the filename
