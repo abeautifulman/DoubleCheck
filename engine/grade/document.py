@@ -210,8 +210,8 @@ class Document():
 	def statistics(self):
 		self.stats['sentences']       = len(self.preprocessed['sentences'])
 		self.stats['tokens']          = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
-                self.stats['grammar-errors']  = len([error for error in self.errors if error['type'] == 'grammar'])
-                self.stats['spelling-errors'] = len([error for error in self.errors if error['type'] == 'grammar'])
+                #self.stats['grammar-errors']  = len([error for error in self.errors if error['type'] == 'grammar'])
+                #self.stats['spelling-errors'] = len([error for error in self.errors if error['type'] == 'grammar'])
 
 def main():
 	user     = raw_input('user: ')
