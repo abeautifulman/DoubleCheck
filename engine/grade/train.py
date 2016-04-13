@@ -10,7 +10,8 @@ class Trainer:
 
     master_dir    = raw_input("What directory should I train on? ") + "/"
     essay_vectors = {}
-    previous_vectors = load('training_data/DoubleCheckEssays/vectors.json')
+    with open('training_data/DoubleCheckEssays/vectors.json', 'r') as vectors:
+        previous_vectors = load(vectors)
 
     def __init__(self):
 
