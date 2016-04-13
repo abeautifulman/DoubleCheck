@@ -4,13 +4,13 @@ from __future__ import division # use floating point division always
 from document   import Document # our main class for essay proccessing
 from time       import sleep    # try not to get our API key revoked for ATD
 from glob       import glob     # unix style path/file management
-from json       import dump     # save our training vectors to json for K means analysis
+from json       import dump, load     # save our training vectors to json for K means analysis
 
 class Trainer:
 
     master_dir    = raw_input("What directory should I train on? ") + "/"
     essay_vectors = {}
-    previous_vectors = json.load('training_data/DoubleCheckEssays/vectors.json')
+    previous_vectors = load('training_data/DoubleCheckEssays/vectors.json')
 
     def __init__(self):
 
