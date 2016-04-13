@@ -7,7 +7,7 @@ var stormpath = require('express-stormpath');
 
 // Render the home page.
 router.get('/', function(req, res) {
-  res.render('animations', { title: 'Home', user: req.user });
+  res.render('index', { title: 'Home', user: req.user });
 });
 
 
@@ -18,6 +18,11 @@ router.get('/modal', function(req, res) {
 router.get('/admin', function(req, res) {
   res.render('admin', { title: 'Home', user: req.user });
 });
+
+router.get('/essays', function(req, res) {
+  res.render('essays', { title: 'Home', user: req.user });
+});
+
 
 
 

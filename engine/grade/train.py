@@ -10,33 +10,35 @@ class Trainer:
 
     master_dir    = raw_input("What directory should I train on? ") + "/"
     essay_vectors = {}
+    previous_vectors = json.load('training_data/DoubleCheckEssays/vectors.json')
 
     def __init__(self):
 
         for dir_ in glob(self.master_dir + "/*"):
             print "\nProcessing", dir_
             for essay in glob(dir_ + "/*"): # essays nested in subdirs
-                print "\nDoubleChecking", essay 
-                doc = Document(essay, "Connor")
-                doc.document_to_text(essay, essay) # should probably truncate the first "essay" argument to just the filename
-                doc.preprocess_text()
-                doc.statistics()
-                errors = doc.proofread()
-                err_stats = {'grammar': 0,
-                             'suggestion': 0,
-                             'spelling': 0
-                             }
-                for err in errors:
-                    err_stats[err["type"]] += 1
-                token_sentence_ratio = doc.stats['tokens'] / doc.stats['sentences']
-                self.essay_vectors[essay] = [
-                                                err_stats['grammar'], 
-                                                err_stats['suggestion'], 
-                                                err_stats['spelling'], 
-                                                token_sentence_ratio
-                                            ]
-                print "Completed " + essay + ". Sleeping..."
-                sleep(10)
+                if essay not in self.previous_vectors.keys():
+                    print "\nDoubleChecking", essay 
+                    doc = Document(essay, "Wil")
+                    doc.document_to_text(essay, essay) # should probably truncate the first "essay" argument to just the filename
+                    doc.preprocess_text()
+                    doc.statistics()
+                    errors = doc.proofread()
+                    err_stats = {'grammar': 0,
+                                 'suggestion': 0,
+                                 'spelling': 0
+                                 }
+                    for err in errors:
+                        err_stats[err["type"]] += 1
+                    token_sentence_ratio = doc.stats['tokens'] / doc.stats['sentences']
+                    self.essay_vectors[essay] = [
+                                                    err_stats['grammar'], 
+                                                    err_stats['suggestion'], 
+                                                    err_stats['spelling'], 
+                                                    token_sentence_ratio
+                                                ]
+                    print "Completed " + essay + ". Sleeping..."
+                    sleep(10)
 
     def save_vectors(self):
         with open("training_data/"+self.master_dir+"vectors.json", "w") as training_json:

@@ -70,7 +70,7 @@ def reorder_grades(grades):
         class_vals[grade["grade"]]["sum"] += grade['a']+grade['b']+grade['c']
     
     for val in class_vals.keys():
-        class_vals[val]["mean"] = class_vals[val]['sum']/len(grades)*3
+        class_vals[val]["mean"] = class_vals[val]['sum']/3
 
     class_vals = [(key, class_vals[key]['mean']) for key in class_vals.keys()] 
     # sort the means
@@ -84,9 +84,10 @@ def reorder_grades(grades):
             if obj["grade"] == new_grade:
                 obj["grade"] = current_grade
                 obj["cluster_mean"] = mean
-
     print sorted(grades, key = lambda x: x["grade"])
+    return grades
+
 final_grades = reorder_grades(classifier.objects)
 with open("training_data/DoubleCheckEssays/grades.json", "w") as grades_json:
-    json.dump(classifier.objects, grades_json)
+    json.dump(final_grades, grades_json)
 print "Grades saved!"
