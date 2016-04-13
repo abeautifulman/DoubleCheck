@@ -146,7 +146,8 @@ class Document():
 		#self.database.put(err2db) 
                 #print err2db
 		#result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
-		self.errors = json_entry 
+		return err2db
+                #self.errors = json_entry 
 
 	def vectorize(self):
 		# tokenize and remove stopwords
