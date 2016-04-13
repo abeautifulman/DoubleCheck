@@ -29,8 +29,11 @@ class Trainer:
                                  'suggestion': 0,
                                  'spelling': 0
                                  }
-                    for err in errors:
-                        err_stats[err["type"]] += 1
+                    try:
+                        for err in errors:
+                            err_stats[err["type"]] += 1
+                    except TypeError:
+                        pass
                     token_sentence_ratio = doc.stats['tokens'] / doc.stats['sentences']
                     self.essay_vectors[essay] = [
                                                     err_stats['grammar'], 
