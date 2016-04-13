@@ -32,7 +32,7 @@ class Trainer:
                         for err in errors:
                             err_stats[err["type"]] += 1
                     except TypeError:
-                        pass
+                        print "No errors!"
                     token_sentence_ratio = doc.stats['tokens'] / doc.stats['sentences']
                     self.essay_vectors[essay] = [
                                                     err_stats['grammar'], 
