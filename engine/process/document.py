@@ -146,12 +146,12 @@ class Document():
 		#self.database.put(err2db) 
                 #print err2db
 		#result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
-		return err2db
+		self.errors = json_entry 
 
 	def vectorize(self):
 		# tokenize and remove stopwords
-		#sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip()) # use raw text
-		sentences = Topic(raw_input('topic: ')).text
+		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip()) # use raw text
+		#sentences = Topic(raw_input('topic: ')).text # get text from wikipedia
 		#stoplist  = set('for this that by or is a of the and to in are be as an it can on if at which then also with used such not from use other have some these more using has many one was may often but their they than when been its not all may some have had'.split())
 		texts     = [[word for word in sentence.lower().split() if word not in self.stopwords] for sentence in sentences]
 		
@@ -208,8 +208,10 @@ class Document():
                                       'tokens'   : tokens }
 
 	def statistics(self):
-		self.stats['sentences'] = len(self.preprocessed['sentences'])
-		self.stats['tokens']    = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
+		self.stats['sentences']       = len(self.preprocessed['sentences'])
+		self.stats['tokens']          = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
+                self.stats['grammar-errors']  = len([error for error in self.errors if error['type'] == 'grammar'])
+                self.stats['spelling-errors'] = len([error for error in self.errors if error['type'] == 'grammar'])
 
 def main():
 	user     = raw_input('user: ')

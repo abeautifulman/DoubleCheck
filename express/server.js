@@ -24,6 +24,8 @@ var io = require('socket.io')(http);
 var StormpathStrategy = require('passport-stormpath');
 var stormpath = require('express-stormpath');
 
+// file reading
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 //var strategy = new StormpathStrategy();
 //passport.use(strategy);
@@ -60,16 +62,32 @@ app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secre
 //app.use(passport.session()); // persistent login sessions
 //app.use(flash()); // use connect-flash for flash messages stored in session
 
-// socket.io
+/* socket.io
 io.on('connection', function(socket){
       console.log('a user connected');
-});
+}); */
 
 // file uploads ================================================================
-function readTextFile(file)
-    {
+var multer = require( 'multer' );
+var result = '';
+var upload = multer({
+    dest: 'uploads/',
+    inMemory: true,
+    onFileUploadData: function(file, data) {            
+        result += data;
+    },  
+    onFileUploadComplete: function(file) {
+        alert(result);
+        console.log(result);
+    }   
+});
+var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
+app.post('/upload', upload.single('file'), function(req, res, next) {
+   /*    
+    console.log('file://'+req.file.path);
+    var readTextFile = function () {
         var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", file, false);
+        rawFile.open("GET", 'file://'+req.file.path, false);
         rawFile.onreadystatechange = function ()
         {
             if(rawFile.readyState === 4)
@@ -82,17 +100,13 @@ function readTextFile(file)
             }
         }
     rawFile.send(null);
-}
-
-
-var multer = require( 'multer' );
-var upload = multer( { dest: 'uploads/' } );
-var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
-app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
-    readTextFile(req.file.path); //need to append file://
-    essays.push(req.file);
+    }
+    //need to append file://
+    //essays.push(req.file);
+*/
     return res.status( 200 ).send( req.file );
 });
+
 
 // routes ======================================================================
 var routes = require('./app/routes');

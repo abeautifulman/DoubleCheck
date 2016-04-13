@@ -43,8 +43,8 @@
     "passport-stormpath": "^0.2.4",
     "rimraf": "^2.4.1",
     "socket.io": "~1.4.5",
-    "xmlhttprequest": "^1.8.0",
     "static-favicon": "^1.0.2",
-    "stormpath": "^0.18.0"
+    "stormpath": "^0.18.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }
