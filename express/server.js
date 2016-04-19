@@ -83,27 +83,25 @@ var upload = multer({
 });
 var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
 app.post('/upload', upload.single('file'), function(req, res, next) {
-   /*    
-    console.log('file://'+req.file.path);
-    var readTextFile = function () {
-        var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", 'file://'+req.file.path, false);
-        rawFile.onreadystatechange = function ()
-        {
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    var allText = rawFile.responseText;
-                    alert(allText);
-                }
-            }
-        }
-    rawFile.send(null);
-    }
-    //need to append file://
-    //essays.push(req.file);
-*/
+    //http://stackoverflow.com/questions/27029229/how-to-programmatically-create-folders-in-s3-with-js-browser-sdk
+    var new_file_name = 'user/'+$scope.account.name.split(' ').join('_').toLowerCase()+'/'+$scope.io.file.name.split(' ').join('_').toLowerCase();
+    AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
+    AWS.config.region = 'us-east-1';
+    var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket }});
+    var params = {
+      Key: new_file_name,
+      ContentType: $scope.io.file.type,
+      Body: $scope.io.file,
+      ACL: 'public-read'
+    };
+    bucket.putObject(params, function (err, data) {
+      $scope.io.Attchment_URL = 'https://###.s3-us-west-1.amazonaws.com/' + new_file_name;
+      $scope.io.$save(function(){
+        $location.path("/insertionOrders/all");
+      });
+    }).on('httpUploadProgress',function(progress) {
+      console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
+    });
     return res.status( 200 ).send( req.file );
 });
 

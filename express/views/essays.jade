@@ -2,6 +2,7 @@ extends ./parts/layout.jade
 block vars
   - page = 'Essays';
 block main
+    script(src='/public/js/essays-bundle.js')
     br
     .container-fluid
         .row
@@ -27,6 +28,7 @@ block main
                             .col-xs-3
                                 i.fa.fa-comments.fa-5x
                             .col-xs-9.text-right
+                                #grammar-errors
                                 .huge one sec..
                                 div Grammar errors
                     a(href='#')
@@ -42,6 +44,7 @@ block main
                             .col-xs-3
                                 i.fa.fa-tasks.fa-5x
                             .col-xs-9.text-right
+                                #spelling-errors
                                 .huge hold up..
                                 div Spelling errors
                     a(href='#')
@@ -50,7 +53,4 @@ block main
                             span.pull-right
                                 i.fa.fa-arrow-circle-right
                             .clearfix
-                    span.pull-right
-                      i.fa.fa-arrow-circle-right
-                    .clearfix
- 
+

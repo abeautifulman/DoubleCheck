@@ -35,6 +35,9 @@ from firebase import firebase
 # wikipedia parsing
 from wikitools import Topic
 
+# general utilities
+import os
+
 class Document():
 	'''
 	convert, parse, and operate on input text
@@ -67,7 +70,8 @@ class Document():
 	def __init__(self, filename, user):
 		self.author       = user
 		self.filename     = filename # contains extension
-		self.raw          = str()    # document as str 
+		self.name         = os.path.splitext(os.path.basename(filename))[0] # extension removed
+                self.raw          = str()    # document as str 
 		self.preprocessed = dict()   # text converted into ( word, lemma, [POS] ) format
 		self.stats        = dict()
                 self.document_to_text(self.filename, self.filename)
@@ -146,7 +150,8 @@ class Document():
 		#self.database.put(err2db) 
                 #print err2db
 		#result = self.database.post('/proofreads/' + self.author + '/' + self.filename[:-5], err2db)
-		self.errors = json_entry 
+                self.database.post('/users/' + self.author + '/proofreads/' + self.name + '/errors', err2db)
+                self.errors = err2db
 
 	def vectorize(self):
 		# tokenize and remove stopwords
@@ -211,7 +216,9 @@ class Document():
 		self.stats['sentences']       = len(self.preprocessed['sentences'])
 		self.stats['tokens']          = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
                 self.stats['grammar-errors']  = len([error for error in self.errors if error['type'] == 'grammar'])
-                self.stats['spelling-errors'] = len([error for error in self.errors if error['type'] == 'grammar'])
+                self.stats['spelling-errors'] = len([error for error in self.errors if error['type'] == 'spelling'])
+                self.stats['suggest-errors']  = len([error for error in self.errors if error['type'] == 'suggestion'])
+                self.database.post('/users/' + self.author + '/proofreads/' + self.name + '/stats', self.stats)
 
 def main():
 	user     = raw_input('user: ')
