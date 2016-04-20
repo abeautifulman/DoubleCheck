@@ -125,7 +125,9 @@ class Document():
 			with open(file_path, 'r') as file_:
 				self.raw = file_.read()
 
-	def proofread(self):
+                self.database.post('/users/' + self.author + '/proofreads/' + self.name + '/text', self.raw)
+
+        def proofread(self):
                 # our API key for AfterTheDeadline
 		ATD.setDefaultKey(hash("DoubleCheck")) 
 
