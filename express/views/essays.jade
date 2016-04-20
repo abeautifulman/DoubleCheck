@@ -2,8 +2,9 @@ extends ./parts/layout.jade
 block vars
   - page = 'Essays';
 block main
-    script(src='/public/js/essays-bundle.js')
-    script(src='/public/js/process-text-bundle.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')    
+    script(src='/js/essays-bundle.js')
+    script(src='/js/process-text-bundle.js')
     br
     .container-fluid
         .row
@@ -54,4 +55,9 @@ block main
                             span.pull-right
                                 i.fa.fa-arrow-circle-right
                             .clearfix
+        .row
+            .col-lg-12
+                .jumbotron
+                    #essay-text
+
 
