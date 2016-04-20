@@ -26,24 +26,12 @@ var stormpath = require('express-stormpath');
 
 // file reading
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+// AWS file uploading
+var aws = require('aws-sdk');
 
-//var strategy = new StormpathStrategy();
-//passport.use(strategy);
-//passport.serializeUser(strategy.serializeUser);
-//passport.deserializeUser(strategy.deserializeUser);
-
-
-
-// configuration ===============================================================
-
-//require('./config/passport')(passport); // pass passport for configuration
-// required for passport
-//app.use(session({
-//    secret: process.env.EXPRESS_SECRET,
-//    key: 'sid',
-//    cookie: {secure: false},
-//}));
-
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 // set up our express application
 app.use(favicon());
@@ -105,6 +93,38 @@ app.post('/upload', upload.single('file'), function(req, res, next) {
     return res.status( 200 ).send( req.file );
 });
 
+
+app.get('/sign_s3', function(req, res){
+    aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+    var s3 = new aws.S3();
+    var s3_params = {
+        Bucket: S3_BUCKET,
+        Key: req.query.file_name,
+        Expires: 60,
+        ContentType: req.query.file_type,
+        ACL: 'public-read'
+    };
+    s3.getSignedUrl('putObject', s3_params, function(err, data){
+        if(err){
+            console.log(err);
+        }
+        else{
+            var return_data = {
+                signed_request: data,
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.file_name
+            };
+            res.write(JSON.stringify(return_data));
+            res.end();
+        }
+    });
+});
+
+app.post('/submit_form', function(req, res){
+    username = "babes";
+    full_name = "babeessss";
+    update_account(username, full_name); // TODO: create this function
+    // TODO: Return something useful or redirect
+});
 
 // routes ======================================================================
 var routes = require('./app/routes');
