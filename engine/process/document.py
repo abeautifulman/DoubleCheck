@@ -185,6 +185,10 @@ class Document():
 		vis_data = pyLDAvis.gensim.prepare(lda, corpus, dictionary)
         	pyLDAvis.display(vis_data)
        		pyLDAvis.show(vis_data)
+                with open('topic_models/'+self.name+'.json', 'a+') as topic_json:
+                    pyLDAvis.save_json(vis_data, topic_json)
+                with open('topic_models/'+self.name+'.html', 'a+') as topic_html:
+                    pyLDAvis.save_html(vis_data, topic_html)
 
 	def preprocess_text(self):
 		'''
@@ -239,7 +243,6 @@ def main():
 		'''
 	else:
 		print "converted document to raw text..."
-		#doc.document_to_text(doc.filename, doc.filename)
 		print "NOT proofreading the document..."
 		#doc.proofread()
 		print "vectorizing text and performing LDA..."
