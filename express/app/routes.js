@@ -23,7 +23,9 @@ router.get('/essays', function(req, res) {
   res.render('essays', { title: 'Home', user: req.user });
 });
 
-
+router.get('/signup', function(req, res) {
+  res.render('signup', { title: 'Home', user: req.user });
+});
 
 
 module.exports = router;
