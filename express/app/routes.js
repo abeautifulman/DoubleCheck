@@ -33,7 +33,7 @@ function LoggedIn(req, res, next) {
     return next();
   } else {
    console.log("User is logged out");
-   res.redirect('/signup');
+   res.redirect('/login');
   } 
 }
 

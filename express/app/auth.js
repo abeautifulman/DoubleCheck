@@ -83,11 +83,11 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/essays', au, function(req, res) {
-  res.render('esays', {title: 'Essays' });
+  res.render('essays', {title: 'Essays' });
 });
 
 function au(req, res, next) {
-  var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   var authData = ref.getAuth();
   if (authData) {
     console.log("User " + authData.uid + " is logged in with " + authData.provider);
