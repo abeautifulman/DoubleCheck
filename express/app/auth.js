@@ -46,6 +46,17 @@ router.post('/signup', function(req, res) {
           } else {
             console.log("Authenticated successfully with payload:", authData);
             console.log(authData);
+            ref.onAuth(function(authData) {
+               if (authData) {
+                // save the user's profile into the database so we can list users,
+                // use them in Security and Firebase Rules, and show profiles
+                ref.child("users").child(authData.uid).set({
+                provider: authData.provider,
+                name: getName(authData)
+            });
+          }
+         });
+
             return res.redirect('/essays');
           }
         });
@@ -53,6 +64,17 @@ router.post('/signup', function(req, res) {
    });
 
 });
+
+function getName(authData) {
+  switch(authData.provider) {
+     case 'password':
+       return authData.password.email.replace(/@.*/, '');
+     case 'twitter':
+       return authData.twitter.displayName;
+     case 'facebook':
+       return authData.facebook.displayName;
+  }
+}
 
 
 // Render the login page.
