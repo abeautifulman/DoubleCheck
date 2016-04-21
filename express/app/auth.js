@@ -112,7 +112,7 @@ router.post('/login', function(req, res) {
 router.get('/essays', au, function(req, res) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   var authData = ref.getAuth();
-  res.render('essays', {title: 'Essays', user: authData.password.email});
+  res.render('essays', {title: 'Essays', user: getName(authData)});
 
   console.log("User Data:")
   console.log(authData.password.email);
