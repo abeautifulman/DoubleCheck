@@ -6,8 +6,8 @@ signup_button.addEventListener('click', signup);
 
 function signup () {
     ref.createUser({
-      email    : document.getElementById('email');
-      password : document.getElementById('password');
+      email    : document.getElementById('input-32');
+      password : document.getElementById('input-33');
     }, function(error, userData) {
       if (error) {
 	console.log("Error creating user:", error);
