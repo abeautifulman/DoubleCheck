@@ -11,22 +11,21 @@ router.get('/', function(req, res) {
 });
 
 
-// Render the registration page.
 router.get('/signup', function(req, res) {
-  res.render('signup', { title: 'Signup', error: req.flash('error')[0] });
+  res.render('signup', { title: 'Signup'}); 
 });
 
-
-// Signup a new user to Stormpath.
 router.post('/signup', function(req, res) {
 
-  var username = req.body.name;
+  console.log(req.body);
+
+  var username = req.body.firstname;
   var user_email    = req.body.email;
   var password = req.body.password;
 
   // Grab user fields.
   if (!username || !password || !user_email) {
-    return res.render('signup', { title: 'Signup', error: 'Email and password required.' });
+    return res.render('signup', { title: 'Signup', error: 'Email and password required.' }); 
   }
 
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
@@ -38,7 +37,7 @@ router.post('/signup', function(req, res) {
         console.log("Error creating user:", error);
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
-      }
+      }   
    });
 
 });

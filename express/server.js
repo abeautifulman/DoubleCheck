@@ -119,18 +119,11 @@ app.get('/sign_s3', function(req, res){
     });
 });
 
-app.post('/submit_form', function(req, res){
-    username = "babes";
-    full_name = "babeessss";
-    update_account(username, full_name); // TODO: create this function
-    // TODO: Return something useful or redirect
-});
-
 // routes ======================================================================
 var routes = require('./app/routes');
-//var auth   = require('./app/auth');
+var auth   = require('./app/auth');
 app.use('/', routes);
-//app.use('/', auth);
+app.use('/', auth);
 
 app.use(stormpath.init(app, {
 
