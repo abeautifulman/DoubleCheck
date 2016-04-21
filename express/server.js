@@ -39,6 +39,7 @@ app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded());
+app.use(bodyParser()); // get information from html forms
 app.use(cookieParser());
 
 

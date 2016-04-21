@@ -31,7 +31,7 @@ router.get('/essays', function(req, res) {
 router.post('/signup', function(req, res) {
 
   console.log(req.body);
-
+  
   var username = req.body.firstname;
   var user_email    = req.body.email;
   var password = req.body.password;
@@ -41,6 +41,7 @@ router.post('/signup', function(req, res) {
     return res.render('signup', { title: 'Signup', error: 'Email and password required.' }); 
   }
 
+  // Create a new user
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   ref.createUser({
     email    : user_email,
@@ -51,7 +52,15 @@ router.post('/signup', function(req, res) {
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
       }   
-   }); 
+   });
+
+  // actually authenticate the user
+  ref.authWithPassword({
+    email    : user_email,
+    password : password
+  }, function(error, authData) { /* Code */ }, {
+    remember: "sessionOnly"
+  }); 
 
 }); */
 
