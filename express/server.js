@@ -128,7 +128,9 @@ app.post('/submit_form', function(req, res){
 
 // routes ======================================================================
 var routes = require('./app/routes');
+//var auth   = require('./app/auth');
 app.use('/', routes);
+//app.use('/', auth);
 
 app.use(stormpath.init(app, {
 

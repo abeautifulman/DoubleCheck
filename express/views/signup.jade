@@ -15,8 +15,6 @@ html.no-js(lang='en')
     link(rel='stylesheet', type='text/css', href='/css/signup/set1.css')
     link(rel='stylesheet', type='text/css', href='/css/modals/component.css')
     link(rel='stylesheet', type='text/css', href='/css/modals/def.css')
-    //if IE
-      script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
   body
     .container
       header.codrops-header
@@ -25,31 +23,35 @@ html.no-js(lang='en')
           span You're almost ready to start! 
       section.content.bgcolor-4
         h2 Profile Information  
-        form.login_form(action='/signup' method='post')
+        form.login_form(action='/signup', method='post')
+
             - if (error)
                 .alert.alert-warning(role="alert")
                     #alert
                         h5= error
+
             span.input.input--madoka
-              input#input-31.input__field.input__field--madoka(type='text', name="name")
+              input#input-31.input__field.input__field--madoka(type='text', name='firstname')
               label.input__label.input__label--madoka(for='input-31')
                 svg.graphic.graphic--madoka(width='100%', height='100%', viewbox='0 0 404 77', preserveaspectratio='none')
                   path(d='m0,0l404,0l0,77l-404,0l0,-77z')
-                span.input__label-content.input__label-content--madoka Name
+                span.input__label-content.input__label-content--madoka(name="first") Name
+
             span.input.input--madoka
-              input#input-32.input__field.input__field--madoka(type='text', name="email")
+              input#input-32.form-control.input__field.input__field--madoka(type='text', name='email')
               label.input__label.input__label--madoka(for='input-32')
                 svg.graphic.graphic--madoka(width='100%', height='100%', viewbox='0 0 404 77', preserveaspectratio='none')
                   path(d='m0,0l404,0l0,77l-404,0l0,-77z')
                 span.input__label-content.input__label-content--madoka Email
+
             span.input.input--madoka
-              input#input-33.input__field.input__field--madoka(type='password', name="password")
+              input#input-33.form-control.input__field.input__field--madoka(type='password', name='password')
               label.input__label.input__label--madoka(for='input-33')
                 svg.graphic.graphic--madoka(width='100%', height='100%', viewbox='0 0 404 77', preserveaspectratio='none')
                   path(d='m0,0l404,0l0,77l-404,0l0,-77z')
                 span.input__label-content.input__label-content--madoka Password
-        br
-        button#signup-button.btn.btn-default Signup 
+            br
+            button.btn.btn-default(type='submit') Signup 
     // /container
     script(src='/js/signup/classie.js')
     script.

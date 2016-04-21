@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var stormpath = require('stormpath');
+var firebase = require('firebase');
 
 
 // Render the home page.
@@ -19,50 +20,27 @@ router.get('/signup', function(req, res) {
 // Signup a new user to Stormpath.
 router.post('/signup', function(req, res) {
 
-  var first    = req.body.firstName;
-  var last     = req.body.lastName;
-  var username = req.body.username;
+  var username = req.body.name;
+  var user_email    = req.body.email;
   var password = req.body.password;
 
   // Grab user fields.
-  if (!username || !password || !group) {
+  if (!username || !password || !user_email) {
     return res.render('signup', { title: 'Signup', error: 'Email and password required.' });
   }
 
-  // Initialize our Stormpath client.
-  var apiKey = new stormpath.ApiKey(
-    process.env['STORMPATH_API_KEY_ID'],
-    process.env['STORMPATH_API_KEY_SECRET']
-  );
-  var spClient = new stormpath.Client({ apiKey: apiKey });
-
-  // Grab our app, then attempt to create this user's account.
-  var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
-    if (err) throw err;
-
-    app.createAccount({
-      givenName: first,
-      surname: last,
-      username: username,
-      email: username,
-      password: password,
-
-    }, function (err, createdAccount) {
-      if (err) {
-        return res.render('signup', {'title': 'Signup', error: err.userMessage });
+  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+  ref.createUser({
+    email    : user_email,
+    password : password 
+    }, function(error, userData) {
+      if (error) {
+        console.log("Error creating user:", error);
       } else {
-          console.log("acount created successfully!");
-          });
-         });
-
-        passport.authenticate('stormpath')(req, res, function () {
-        console.log(createdAccount);
-          return res.redirect('/profile');
-        });
+        console.log("Successfully created user account with uid:", userData.uid);
       }
-    });
+   });
 
-  });
 });
 
 
