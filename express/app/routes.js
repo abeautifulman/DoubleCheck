@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//var passport = require('passport');
-//var stormpath = require('express-stormpath');
-var stormpath = require('express-stormpath');
 var firebase  = require('firebase');
 
 

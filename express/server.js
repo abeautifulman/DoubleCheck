@@ -21,9 +21,6 @@ var session      = require('express-session');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var StormpathStrategy = require('passport-stormpath');
-var stormpath = require('express-stormpath');
-
 // file reading
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 // AWS file uploading
@@ -47,7 +44,6 @@ app.set('view engine', 'jade'); // set up jade for templating
 
 app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 //app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
 //app.use(flash()); // use connect-flash for flash messages stored in session
@@ -127,44 +123,12 @@ var auth   = require('./app/auth');
 app.use('/', routes);
 app.use('/', auth);
 
-app.use(stormpath.init(app, {
-
- client: {
-    apiKey: {
-      id: 'Q96OGT18UOAYU0BO6WX4R1LHX',
-      secret: '6t+fi3Rj/DwzEqxr8aiumYFbywrW7ipUAi0cahR62h8',
-    }
-  },
-  application: {
-    href: 'https://api.stormpath.com/v1/applications/3ehSoEnPsbwDAm9wvwQwpu'
-  },
-
-  web: {
-    login: {
-      enabled: true
-    },
-    logout: {
-      enabled: true
-    },
-    me: {
-      enabled: true
-    },
-    oauth2: {
-      enabled: true
-    },
-    register: {
-      enabled: true
-    }
-  },
-  expandCustomData: true
-}));
-
 
 // launch ======================================================================
 //app.listen(port);
 //console.log('The magic happens on port ' + port);
-app.on('stormpath.ready', function () {
-  app.listen(port);
+
+app.listen(port, function () {
   console.log('Doublecheck is launched on port ' + port);
 });
 

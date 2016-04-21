@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var stormpath = require('stormpath');
 var firebase = require('firebase');
 
 
@@ -66,19 +64,6 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-
-// Authenticate a user.
-router.post(
-  '/login',
-  passport.authenticate(
-    'stormpath',
-    {
-      successRedirect: '/profile',
-      failureRedirect: '/login',
-      failureFlash: 'Invalid email or password.',
-    }
-  )
-);
 
 
 // Render the profile page.
