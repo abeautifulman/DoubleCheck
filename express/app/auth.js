@@ -120,10 +120,14 @@ function au(req, res, next) {
   }
 }
 
+function logout(req, res, next) {
+  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+  ref.unauth();
+  return next();
+}
 
 // Logout the user, then redirect to the home page.
-router.get('/logout', function(req, res) {
-  req.logout();
+router.get('/logout', logout, function(req, res) {
   res.redirect('/');
 });
 
