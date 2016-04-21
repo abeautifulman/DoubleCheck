@@ -41,10 +41,12 @@ router.post('/signup', function(req, res) {
         }, function(error, authData) {
           if (error) {
             console.log("Login Failed!", error);
+            return res.redirect('/signup');
+
           } else {
             console.log("Authenticated successfully with payload:", authData);
             console.log(authData);
-              return res.redirect('/essays');
+            return res.redirect('/essays');
           }
         });
       }   
@@ -58,26 +60,49 @@ router.get('/login', function(req, res) {
   res.render('login', { title: 'Login' });
 });
 
+router.post('/login', function(req, res) {
+  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+  var authData = ref.getAuth();
+
+  var user_email = req.body.email;
+  var password = req.body.password;
+
+  ref.authWithPassword({
+    email    : user_email,
+    password : password 
+  }, function(error, authData) {
+    if (error) {
+      console.log("Login Failed!", error);
+      res.redirect('/login');
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      res.redirect('/essays');
+    }
+  });
+
+});
+
+router.get('/essays', au, function(req, res) {
+  res.render('esays', {title: 'Essays' });
+});
+
+function au(req, res, next) {
+  var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+  var authData = ref.getAuth();
+  if (authData) {
+    console.log("User " + authData.uid + " is logged in with " + authData.provider);
+    return next();
+  } else {
+    console.log("User is logged out");
+    res.redirect('/login');
+  }
+}
+
 
 // Logout the user, then redirect to the home page.
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
-});
-
-
-
-// Render the profile page.
-router.get('/profile', function (req, res) {
-  if (!req.user || req.user.status !== 'ENABLED') {
-    return res.redirect('/login');
-  }
-
-  res.render('profile', {
-    title: 'Profile',
-    user: req.user
-    }
-  );
 });
 
 module.exports = router;

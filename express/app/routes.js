@@ -26,10 +26,6 @@ router.get('/admin', function(req, res) {
   res.render('admin', { title: 'Home', user: req.user });
 });
 
-router.get('/essays', LoggedIn, function(req, res) {
-  res.render('essays', { title: 'Home', user: req.user });
-});
-
 function LoggedIn(req, res, next) {
 
   if (authData) {
