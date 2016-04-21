@@ -19,9 +19,9 @@ router.post('/signup', function(req, res) {
 
   console.log(req.body);
 
-  var username = req.body.firstname;
+  var username      = req.body.firstname;
   var user_email    = req.body.email;
-  var password = req.body.password;
+  var password      = req.body.password;
 
   // Grab user fields.
   if (!username || !password || !user_email) {
@@ -37,6 +37,17 @@ router.post('/signup', function(req, res) {
         console.log("Error creating user:", error);
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
+        ref.authWithPassword({
+          email    : user_email,
+          password : password 
+        }, function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            console.log("Authenticated successfully with payload:", authData);
+              return res.redirect('/admin');
+          }
+        });
       }   
    });
 
