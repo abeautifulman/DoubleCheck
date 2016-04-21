@@ -43,7 +43,8 @@ router.post('/signup', function(req, res) {
             console.log("Login Failed!", error);
           } else {
             console.log("Authenticated successfully with payload:", authData);
-              return res.redirect('/admin');
+            console.log(authData);
+              return res.redirect('/essays');
           }
         });
       }   
@@ -54,7 +55,7 @@ router.post('/signup', function(req, res) {
 
 // Render the login page.
 router.get('/login', function(req, res) {
-  res.render('login', { title: 'Login', error: req.flash('error')[0] });
+  res.render('login', { title: 'Login' });
 });
 
 
