@@ -3,6 +3,9 @@ var router = express.Router();
 var firebase = require('firebase');
 
 
+var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+var authData = ref.getAuth();
+
 // Render the home page.
 router.get('/', function(req, res) {
   res.render('index', { title: 'Home', user: req.user });
@@ -65,6 +68,8 @@ router.post('/signup', function(req, res) {
 
 });
 
+// straight from firebase API documentation
+// https://www.firebase.com/docs/web/guide/user-auth.html
 function getName(authData) {
   switch(authData.provider) {
      case 'password':
@@ -105,7 +110,12 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/essays', au, function(req, res) {
-  res.render('essays', {title: 'Essays' });
+  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+  var authData = ref.getAuth();
+  res.render('essays', {title: 'Essays', user: authData.password.email});
+
+  console.log("User Data:")
+  console.log(authData.password.email);
 });
 
 function au(req, res, next) {

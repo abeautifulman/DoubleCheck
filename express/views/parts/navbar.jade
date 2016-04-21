@@ -87,7 +87,7 @@ body
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               i.fa.fa-user
-              |  Connor Davis 
+                |  #{user}
               b.caret
             ul.dropdown-menu
               li
@@ -104,6 +104,6 @@ body
                   |  Settings
               li.divider
               li
-                a(href='#')
+                a(href='/logout')
                   i.fa.fa-fw.fa-power-off
                   |  Log Out
