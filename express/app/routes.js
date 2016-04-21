@@ -31,7 +31,7 @@ router.get('/signup', function(req, res) {
 router.post('/signup', function(req, res) {
 
   console.log(req.body);
-
+  
   var username = req.body.firstname;
   var user_email    = req.body.email;
   var password = req.body.password;
