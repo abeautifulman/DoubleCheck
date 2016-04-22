@@ -1,3 +1,7 @@
+var express = require('express');
+var router = express.Router();
+var firebase = require('firebase');
+
 router.get('/essays', authenticate, function(req, res) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   var authData = ref.getAuth();
@@ -29,3 +33,5 @@ function getName(authData) {
        return authData.facebook.displayName;
   }
 }
+
+module.exports = router;
