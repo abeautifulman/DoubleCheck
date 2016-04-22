@@ -94,13 +94,18 @@ router.post('/login', function(req, res) {
   var user_email = req.body.email;
   var password = req.body.password;
 
+   // Grab user fields.
+  if (!password || !user_email) {
+    return res.render('login', { title: 'Login', error: 'Email and password required.' }); 
+  }
+
   ref.authWithPassword({
     email    : user_email,
     password : password 
   }, function(error, authData) {
     if (error) {
       console.log("Login Failed!", error);
-      res.redirect('/login');
+      res.render('login', {title: 'Login', error: 'Incorrect email or password'});
     } else {
       console.log("Authenticated successfully with payload:", authData);
       res.redirect('/essays');
