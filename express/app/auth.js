@@ -114,27 +114,6 @@ router.post('/login', function(req, res) {
 
 });
 
-router.get('/essays', au, function(req, res) {
-  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
-  var authData = ref.getAuth();
-  res.render('essays', {title: 'Essays', user: getName(authData)});
-
-  console.log("User Data:")
-  console.log(authData.password.email);
-});
-
-function au(req, res, next) {
-  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
-  var authData = ref.getAuth();
-  if (authData) {
-    console.log("User " + authData.uid + " is logged in with " + authData.provider);
-    return next();
-  } else {
-    console.log("User is logged out");
-    res.redirect('/login');
-  }
-}
-
 function logout(req, res, next) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   ref.unauth();
