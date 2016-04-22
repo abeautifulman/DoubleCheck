@@ -39,7 +39,7 @@ a {
 
 a:hover,
 a:focus {
-	color: #f48b95;
+	color: #607388;
 }
 
 .hidden {
@@ -191,11 +191,11 @@ a:focus {
 
 .section:nth-of-type(odd):not(:first-child) {
 	color: #fff;
-	background: #984447;
+	background: #404d5b;
 }
 
 .section--menu {
-	background: #449895;
+	background: #C0C4B4;
 	position: relative;
 	overflow: hidden;
 	min-height: 80vh;
@@ -217,7 +217,7 @@ a:focus {
 	text-indent: 3px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #984447;
+	color: #404d5b;
 }
 
 .break__title {
@@ -268,7 +268,7 @@ a:focus {
 	display: block;
 	margin: 0.5em 0;
 	letter-spacing: 0;
-	color: #449895;  //college essays colors
+	color: #C0C4B4;  //college essays colors
 }
 
 /* Top Navigation Style */
@@ -342,7 +342,7 @@ a:focus {
 	font-weight: bold;
 	padding: 10em 1em;
 	text-align: center;
-	background: #000000;
+	background: #151619;
 }
 
 .content--related h1 {

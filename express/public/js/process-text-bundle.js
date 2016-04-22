@@ -283,16 +283,25 @@ module.exports = Firebase;
 var Firebase = require('firebase');
 var firebase = new Firebase('https://doublecheckproject.firebaseio.com/');
 
-//set these variables dynamically?
-var user = 'hillaryClinton';
-var name = 'hillary_graduation';
+var current_essay = 'Upload an essay!' // default (no essays)
+
+var authData = firebase.getAuth(); // is the user logged in?
+if (authData) {
+  console.log("Authenticated user with uid:", authData.uid);
+  var user = authData.uid;
+  var proofread_ref = firebase.child('users').child(user).child('proofreads');
+  proofread_ref.on('val', function(snap) {
+    var arr = snap.val();
+    console.log(arr);
+  });
+}
 
 var essay_ref = firebase.child('users').child(user).child('proofreads').child(name);
 
 var text, errors;
 
 essay_ref.on('value', function(snap) {
-    var obj = snap.val(); 
+    var obj = snap.val();
     text = Object.keys(obj['text']).map(function (key) {return obj['text'][key]});
     $('#essay-text').text(text);
     errors = Object.keys(obj['errors']).map(function (key) {return obj['errors'][key]});
@@ -304,6 +313,5 @@ essay_ref.on('value', function(snap) {
         }
     }
 });
-
 
 },{"firebase":1}]},{},[2]);

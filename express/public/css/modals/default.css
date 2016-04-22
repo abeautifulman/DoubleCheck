@@ -22,11 +22,11 @@ body, html { font-size: 100%; padding: 0; margin: 0; }
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	color: #fff;
-	background: #e74c3c;
+	background: #4C4648;
 }
 
 a {
-	color: #c0392b;
+	color: #6f4f47;
 	text-decoration: none;
 }
 
@@ -105,7 +105,7 @@ a:active {
 }
 
 .codrops-top a:hover {
-	color: #e74c3c;
+	color: #4C4648;
 	background: rgba(255,255,255,0.6);
 }
 

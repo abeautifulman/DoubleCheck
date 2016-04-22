@@ -17,7 +17,7 @@
 
 body {
 	background: #f9f7f6;
-	color: #404d5b;
+	color: #5b404d;
 	font-weight: 500;
 	font-size: 1.05em;
 	font-family: 'Raleway', Arial, sans-serif;
@@ -63,7 +63,7 @@ a:hover, a:focus {
 .bgcolor-6 { background: #2fa8ec; color: #fff;}
 .bgcolor-7 { background: #d0d6d6; }
 .bgcolor-8 { background: #3d4444; color: #fff; }
-.bgcolor-9 { background: #8781bd; color: #fff; }
+.bgcolor-9 { background: #3d4444; color: #fff; }
 .bgcolor-10 { background: #6C6C6C; }
 
 body .nomargin-bottom {

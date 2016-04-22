@@ -903,14 +903,14 @@
 .input__field--madoka {
 	width: 100%;
 	background: transparent;
-	color: #7A7593;
+	color: #758e93;
 }
 
 .input__label--madoka {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	color: #7A7593;
+	color: #758e93;
 	text-align: left;
 	cursor: text;
 }

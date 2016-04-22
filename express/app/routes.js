@@ -34,7 +34,7 @@ function LoggedIn(req, res, next) {
   } else {
    console.log("User is logged out");
    res.redirect('/login');
-  } 
+  }
 }
 
 
