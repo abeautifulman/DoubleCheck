@@ -120,8 +120,10 @@ app.get('/sign_s3', function(req, res){
 // routes ======================================================================
 var routes = require('./app/routes');
 var auth   = require('./app/auth');
+var essays = require('./app/essays');
 app.use('/', routes);
 app.use('/', auth);
+app.use('/', essays);
 
 
 // launch ======================================================================
