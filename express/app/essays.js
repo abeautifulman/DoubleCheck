@@ -5,10 +5,18 @@ var firebase = require('firebase');
 router.get('/essays', authenticate, function(req, res) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   var authData = ref.getAuth();
-  res.render('essays', {title: 'Essays', user: getName(authData)});
+  res.render('essays', {
+    title: 'Essays', 
+    user: getName(authData)
+  });
 
-  console.log("User Data:")
-  console.log(authData.password.email);
+  ref.child('users').child(authData.uid).child('proofreads').once('value', function(snap) {
+    var essay = snap.val();
+    console.log("Proofreads:");
+    console.log(essay);
+  });
+  console.log("User Data:");
+  console.log(authData.uid);
 });
 
 function authenticate(req, res, next) {
