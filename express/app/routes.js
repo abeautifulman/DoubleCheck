@@ -1,8 +1,15 @@
 var express = require('express');
 var router = express.Router();
-//var passport = require('passport');
-//var stormpath = require('express-stormpath');
-var stormpath = require('express-stormpath');
+var firebase  = require('firebase');
+
+var ref = new Firebase("https://doublecheckproject.firebaseio.com");
+var authData = ref.getAuth();
+
+if (authData) {
+  console.log("User " + authData.uid + " is logged in with " + authData.provider);
+} else {
+  console.log("User is logged out");
+}
 
 
 // Render the home page.
@@ -19,11 +26,16 @@ router.get('/admin', function(req, res) {
   res.render('admin', { title: 'Home', user: req.user });
 });
 
-router.get('/essays', function(req, res) {
-  res.render('essays', { title: 'Home', user: req.user });
-});
+function LoggedIn(req, res, next) {
 
-
+  if (authData) {
+    console.log("User " + authData.uid + " is logged in with " + authData.provider);
+    return next();
+  } else {
+   console.log("User is logged out");
+   res.redirect('/login');
+  }
+}
 
 
 module.exports = router;

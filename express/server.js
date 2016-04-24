@@ -21,35 +21,22 @@ var session      = require('express-session');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var StormpathStrategy = require('passport-stormpath');
-var stormpath = require('express-stormpath');
-
 // file reading
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+// AWS file uploading
+var aws = require('aws-sdk');
 
-//var strategy = new StormpathStrategy();
-//passport.use(strategy);
-//passport.serializeUser(strategy.serializeUser);
-//passport.deserializeUser(strategy.deserializeUser);
-
-
-
-// configuration ===============================================================
-
-//require('./config/passport')(passport); // pass passport for configuration
-// required for passport
-//app.use(session({
-//    secret: process.env.EXPRESS_SECRET,
-//    key: 'sid',
-//    cookie: {secure: false},
-//}));
-
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 // set up our express application
 app.use(favicon());
 app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
+app.use(bodyParser.urlencoded());
+app.use(bodyParser()); // get information from html forms
 app.use(cookieParser());
 
 
@@ -57,7 +44,6 @@ app.set('view engine', 'jade'); // set up jade for templating
 
 app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 //app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
 //app.use(flash()); // use connect-flash for flash messages stored in session
@@ -83,73 +69,68 @@ var upload = multer({
 });
 var essays = new Firebase('https://doublecheckproject.firebaseio.com/queue/essays')
 app.post('/upload', upload.single('file'), function(req, res, next) {
-   /*    
-    console.log('file://'+req.file.path);
-    var readTextFile = function () {
-        var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", 'file://'+req.file.path, false);
-        rawFile.onreadystatechange = function ()
-        {
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    var allText = rawFile.responseText;
-                    alert(allText);
-                }
-            }
-        }
-    rawFile.send(null);
-    }
-    //need to append file://
-    //essays.push(req.file);
-*/
+    //http://stackoverflow.com/questions/27029229/how-to-programmatically-create-folders-in-s3-with-js-browser-sdk
+    var new_file_name = 'user/'+$scope.account.name.split(' ').join('_').toLowerCase()+'/'+$scope.io.file.name.split(' ').join('_').toLowerCase();
+    AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
+    AWS.config.region = 'us-east-1';
+    var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket }});
+    var params = {
+      Key: new_file_name,
+      ContentType: $scope.io.file.type,
+      Body: $scope.io.file,
+      ACL: 'public-read'
+    };
+    bucket.putObject(params, function (err, data) {
+      $scope.io.Attchment_URL = 'https://###.s3-us-west-1.amazonaws.com/' + new_file_name;
+      $scope.io.$save(function(){
+        $location.path("/insertionOrders/all");
+      });
+    }).on('httpUploadProgress',function(progress) {
+      console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
+    });
     return res.status( 200 ).send( req.file );
 });
 
 
+app.get('/sign_s3', function(req, res){
+    aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+    var s3 = new aws.S3();
+    var s3_params = {
+        Bucket: S3_BUCKET,
+        Key: req.query.file_name,
+        Expires: 60,
+        ContentType: req.query.file_type,
+        ACL: 'public-read'
+    };
+    s3.getSignedUrl('putObject', s3_params, function(err, data){
+        if(err){
+            console.log(err);
+        }
+        else{
+            var return_data = {
+                signed_request: data,
+                url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.file_name
+            };
+            res.write(JSON.stringify(return_data));
+            res.end();
+        }
+    });
+});
+
 // routes ======================================================================
 var routes = require('./app/routes');
+var auth   = require('./app/auth');
+var essays = require('./app/essays');
 app.use('/', routes);
-
-app.use(stormpath.init(app, {
-
- client: {
-    apiKey: {
-      id: 'Q96OGT18UOAYU0BO6WX4R1LHX',
-      secret: '6t+fi3Rj/DwzEqxr8aiumYFbywrW7ipUAi0cahR62h8',
-    }
-  },
-  application: {
-    href: 'https://api.stormpath.com/v1/applications/3ehSoEnPsbwDAm9wvwQwpu'
-  },
-
-  web: {
-    login: {
-      enabled: true
-    },
-    logout: {
-      enabled: true
-    },
-    me: {
-      enabled: true
-    },
-    oauth2: {
-      enabled: true
-    },
-    register: {
-      enabled: true
-    }
-  },
-  expandCustomData: true
-}));
+app.use('/', auth);
+app.use('/', essays);
 
 
 // launch ======================================================================
 //app.listen(port);
 //console.log('The magic happens on port ' + port);
-app.on('stormpath.ready', function () {
-  app.listen(port);
+
+app.listen(port, function () {
   console.log('Doublecheck is launched on port ' + port);
 });
 

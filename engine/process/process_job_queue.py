@@ -1,7 +1,9 @@
 #!usr/bin/env python
 
+import sys
 from time     import sleep
 from firebase import firebase
+from document import Document
 
 class DoubleCheckQueue:
 
@@ -12,12 +14,11 @@ class DoubleCheckQueue:
         self.queue.append(filepath)
 
     def process(self):
-        job = queue.pop(0)
-        doc = document(raw_input('user: '), job)
-        doc.
-    
-
-
+        job = self.queue.pop(0)
+        doc = Document(job, raw_input('user: '))
+        doc.preprocess_text()
+        doc.proofread()
+        doc.statistics()
 
 ####################################        
 
@@ -29,4 +30,7 @@ if sys.argv[1]:
 while True:
     #print fb.get('/queue', None)
     #sleep(5)
-    queue.process()
+    try:
+        queue.process()
+    except IndexError:
+        sleep(10)

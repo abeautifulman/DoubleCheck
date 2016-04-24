@@ -1,0 +1,62 @@
+doctype html
+html.no-js(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title DoubleCheck
+    meta(name='description', content='Everyone makes mistakes. DoubleCheck helps you make less.')
+    meta(name='keywords', content='essay, essays, proofread, proofreader, spelling, grammar, NLP, LDA, topic model, topic modeling')
+    meta(name='author', content='DoubleCheck Team')
+    link(rel='shortcut icon', href='favicon.ico')
+    link(rel='stylesheet', type='text/css', href='/css/modals/component.css')
+    link(rel='stylesheet', type='text/css', href='/css/modals/def.css')
+    link(rel='stylesheet', type='text/css', href='css/anim/normalize.css')
+    link(rel='stylesheet', type='text/css', href='css/anim/demo.css')
+    link(rel='stylesheet', type='text/css', href='css/anim/component.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='css/dropzone.css')
+    script(type='text/javascript', src='js/dropzone.js')
+    script(src='/js/modals/modernizr.custom.js')
+    script(src='/js/anim/vivus.min.js')
+    //if IE
+      script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+  body
+    .container
+      header.section.codrops-header
+        h1
+          #doublecheck-cursive
+            script.
+              // need to implement callback function?
+              new Vivus('doublecheck-cursive', {duration: 150, type: 'oneByOne', file: 'img/anim/my-essays.svg'});
+          span COLLEGE ESSAYS 
+          |  now slightly less terrible
+        p
+            button.btn.btn-default Make an Account
+            br
+            br
+            button.btn.btn-default.md-trigger(data-modal='modal-12') Upload an Essay
+      section.section.section--intro
+        p
+          | Everyone makes mistakes. 
+          br
+          #magnifying-glass
+            script.
+              // need to implement callback function?
+              new Vivus('magnifying-glass', {duration: 150, type: 'oneByOne', file: 'img/anim/magnifying-glass.svg'});
+          br
+          strong DoubleCheck helps you make less.
+      section#Horatio.section.section--menu
+        h2.section__title Check it out bru
+        span.link-copy
+
+      section.section
+      section.content.content--related
+        h1 Thanks for visiting
+        i.fa.fa-hand-peace-o.fa-2x(style='color:white')
+  .md-overlay
+      script.
+        var polyfilter_scriptpath = '/js/';
+      script(src='/js/modals/cssParser.js')
+      script(src='/js/modals/css-filters-polyfill.js')
+ 

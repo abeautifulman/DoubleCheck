@@ -1,7 +1,9 @@
 extends ./parts/layout.jade
 block vars
-  - page = 'Essays';
-block main
+    - page = 'Essays';
+      main
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')    
+    script(src='/js/process-text-bundle.js')
     br
     .container-fluid
         .row
@@ -20,13 +22,25 @@ block main
                     i.fa.fa-info-circle
                     strong Proofreading finished!
         .row
+            .col-lg-12
+                .btn-group
+                    button.btn.btn-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        | Action
+                    .dropdown-menu
+                        a.dropdown-item(href='#') Action
+                        a.dropdown-item(href='#') Another action
+                        a.dropdown-item(href='#') Something else here
+                        .dropdown-divider
+                        a.dropdown-item(href='#') Separated link
+        .row
             .col-lg-3.col-md-6
-                .panel.panel-primary
+                .panel.panel-default
                     .panel-heading
                         .row
                             .col-xs-3
                                 i.fa.fa-comments.fa-5x
                             .col-xs-9.text-right
+                                #grammar-errors
                                 .huge one sec..
                                 div Grammar errors
                     a(href='#')
@@ -36,12 +50,13 @@ block main
                                 i.fa.fa-arrow-circle-right
                             .clearfix
             .col-lg-3.col-md-6
-                .panel.panel-green
+                .panel.panel-default
                     .panel-heading
                         .row
                             .col-xs-3
                                 i.fa.fa-tasks.fa-5x
                             .col-xs-9.text-right
+                                #spelling-errors
                                 .huge hold up..
                                 div Spelling errors
                     a(href='#')
@@ -50,7 +65,7 @@ block main
                             span.pull-right
                                 i.fa.fa-arrow-circle-right
                             .clearfix
-                    span.pull-right
-                      i.fa.fa-arrow-circle-right
-                    .clearfix
- 
+        .row
+            .col-lg-12
+                .jumbotron
+                    h2 #{essay} 
