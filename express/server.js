@@ -46,9 +46,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 var routes = require('./app/routes');
 var auth   = require('./app/auth');
 var essays = require('./app/essays');
+var aws = require('./app/aws');
 app.use('/', routes);
 app.use('/', auth);
 app.use('/', essays);
+app.use('/', aws);
 
 
 // launch ======================================================================
