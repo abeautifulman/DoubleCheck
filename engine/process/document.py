@@ -246,13 +246,13 @@ def main():
 	else:
 		print "converted document to raw text..."
 		print "NOT proofreading the document..."
-		#doc.proofread()
+		doc.proofread()
 		print "vectorizing text and performing LDA..."
 		doc.vectorize() # must be called after document_to_test
-		print "NOT preprocessing raw text..."
-		#doc.preprocess_text()
-		print "NOT getting document statistics..."
-		#doc.statistics()
+		print "preprocessing raw text..."
+		doc.preprocess_text()
+		print "getting document statistics..."
+		doc.statistics()
 		print "NOT writing document to database..."
 		'''
 		db_entry = { "filename": doc.filename,
