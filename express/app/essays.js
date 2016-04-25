@@ -11,7 +11,7 @@ router.get('/essays', authenticate, function(req, res) {
     
     res.render('essays', {
       title: 'Essays', 
-      user: getName(authData),
+      user: authData.password.email,
       essay: essays.essay2.text
     });
 
