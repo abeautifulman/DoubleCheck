@@ -17,10 +17,14 @@
 
 body {
 	background: #f9f7f6;
-	color: #5b404d;
+	color: #00717D;
 	font-weight: 500;
 	font-size: 1.05em;
 	font-family: 'Raleway', Arial, sans-serif;
+}
+
+.container {
+	background: #00505C;
 }
 
 a {
@@ -30,7 +34,7 @@ a {
 }
 
 a:hover, a:focus {
-	color: #404d5b;
+	color: #4A2E3C;
 }
 
 .container {
@@ -104,7 +108,7 @@ body .nomargin-bottom {
 
 .codrops-demos a.current-demo {
 	border-bottom: 2px solid;
-	color: #404d5b;
+	color: #4A2E3C;
 }
 
 /* Top Navigation Style */

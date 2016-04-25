@@ -33,13 +33,13 @@ body {
 
 a {
 	text-decoration: none;
-	color: #4e3c3e;
+	color: #4e3c3e; /* brownish */
 	outline: none;
 }
 
 a:hover,
 a:focus {
-	color: #607388;
+	color: #607388; /* bluish */
 }
 
 .hidden {
@@ -189,17 +189,22 @@ a:focus {
 	align-items: center;
 }
 
+
 .section:nth-of-type(odd):not(:first-child) {
 	color: #fff;
-	background: #404d5b;
+	background: #5496A2;
 }
 
 .section--menu {
-	background: #C0C4B4;
+	background: #BD542D;
 	position: relative;
 	overflow: hidden;
-	min-height: 80vh;
+	min-height: 20vh;
 	padding: 2em 0 8em;
+}
+
+.section--menu h2 {
+	color: #fff;
 }
 
 .break {
@@ -217,7 +222,7 @@ a:focus {
 	text-indent: 3px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #404d5b;
+	color: #4A2E3C;
 }
 
 .break__title {
@@ -249,7 +254,7 @@ a:focus {
 	padding: 0em 1em 4em;
 	text-align: center;
 	color: #fff;
-	background: #383838 url(../img/anim/mouse.svg) no-repeat left 50% bottom 40px;
+	background: #00505C url(../img/anim/mouse.svg) no-repeat left 50% bottom 40px;
 }
 
 .codrops-header h1 {
@@ -268,7 +273,7 @@ a:focus {
 	display: block;
 	margin: 0.5em 0;
 	letter-spacing: 0;
-	color: #C0C4B4;  //college essays colors
+	color: #BD542D;  /*college essays colors*/
 }
 
 /* Top Navigation Style */

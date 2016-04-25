@@ -1,7 +1,7 @@
 button {
   border: none;
   padding: 0.6em 1.2em;
-  background: #404d5b;
+  background: #5496A2;
   color: #fff;
   font-family: 'Lato', Calibri, Arial, sans-serif;
   font-size: 1em;
@@ -14,5 +14,5 @@ button {
 }
 
 button:hover {
-  background: #607388;
+  background: #BD542D;
 }
