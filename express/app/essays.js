@@ -6,28 +6,23 @@ router.get('/essays', authenticate, function(req, res) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
   var authData = ref.getAuth();
 
-  res.render('essays', {
-    title: 'Essays', 
-    user: getName(authData),
-    essay: getEssays(authData)
+  ref.child('users').child(authData.uid).child('proofreads').once('value', function(snap) {
+    var essays = snap.val();
+    
+    res.render('essays', {
+      title: 'Essays', 
+      user: getName(authData),
+      essay: essays.essay2.text
+    });
+
+    console.log("Proofreads:");
+    console.log(essays);
   });
 
   console.log("User Data:");
   console.log(authData.uid);
 });
 
-function getEssays(authData) {
-
-  var ref = new Firebase("https://doublecheckproject.firebaseio.com");
-  ref.child('users').child(authData.uid).child('proofreads').once('value', function(snap) {
-    var essays = snap.val();
-    console.log("Proofreads:");
-    console.log(essays);
-    console.log(essays.essay1.text);
-  }); 
-
-  return essays.essay1.text;
-}
 
 function authenticate(req, res, next) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
