@@ -7,14 +7,22 @@ import click
 
 class Topic:
 	'''
-	Find all text in the wikipedia corpus corresponding to a given topic.
+	args:
+		topic: a string containing the topic to search for
+	output:
+		find all text in the wikipedia corpus corresponding to a given topic
 	'''
 	def __init__(self, topic):
 
 		self.text = self.findTopic(topic)
 
 	def findTopic(self, topic):
-
+		'''
+		args:
+			topic: a string containing the topic
+		outputs:
+			generates all similar words to the given topic and searches wikipedia for the words
+		'''
 		# first, assess wordnet to determine all similar topic to search for
 		topics = []
 		for syn in wn.synsets(topic):
