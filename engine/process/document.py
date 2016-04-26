@@ -45,7 +45,8 @@ class Document():
             user: the name of the document author/user (for use with the doublecheck website, this should be the authenticated UID from firebase)
 
         output:
-            
+            This class can be used for several text processing purposes, depending on the instance methods called. 
+            It is used on DoubleCheck's DigitalOcean servers to process the job queue of essays.
         '''
 	# establish connection to firebase
 	database = firebase.FirebaseApplication('https://doublecheckproject.firebaseio.com/', None)
@@ -90,6 +91,13 @@ class Document():
     		return str
 
 	def document_to_text(self, filename, file_path):
+                '''
+                args:
+                    filename: the filename of the document (can be the same as the file_path)
+                    file_path: the path used to find the document
+                output:
+                    converts .doc, .docx, .odt, .pdf, and .txt into acceptable format for text processing
+                '''
 		if filename[-4:] == ".doc":
         		cmd            = ['antiword', file_path]
         		p              = Popen(cmd, stdout=PIPE)
@@ -120,6 +128,12 @@ class Document():
                 self.database.post('/users/' + self.author + '/proofreads/' + self.name + '/text', self.raw)
 
         def proofread(self):
+                '''
+                args: 
+                    none
+                output: 
+                    generates spelling, grammar, and suggestion errors using the AfterTheDeadline API, and posts them to firebase
+                '''
                 # our API key for AfterTheDeadline
 		ATD.setDefaultKey(hash("DoubleCheck")) 
 
@@ -148,6 +162,12 @@ class Document():
                 self.errors = err2db
 
 	def vectorize(self):
+                '''
+                args: 
+                    none
+                output:
+                    generates an LDA topic model of the document using gensim and pyLDAvis
+                '''
 		# tokenize and remove stopwords
 		sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip()) # use raw text
 		#sentences = Topic(raw_input('topic: ')).text # get text from wikipedia
@@ -186,8 +206,12 @@ class Document():
 
 	def preprocess_text(self):
 		'''
-                removed a lot of awesome functionality from this fcn for training...
-                need to add it back in!
+                args:
+                    none
+                output:
+                    splits essay into sentences and tokens
+                    generates part of speech tags for all sentences/tokens
+                    performs named entity recognition
                 '''
                 sentences = self.sent_detector.tokenize(self.raw.decode('utf-8').strip())
 		tokens    = [self.tokenizer.tokenize(sentence) for sentence in sentences]		
@@ -211,6 +235,12 @@ class Document():
                                       'tokens'   : tokens }
 
 	def statistics(self):
+                '''
+                args: 
+                    none
+                output:
+                    computes all stats and posts to firebase
+                '''
 		self.stats['sentences']       = len(self.preprocessed['sentences'])
 		self.stats['tokens']          = len([token for sentence in self.preprocessed['tokens'] for token in sentence]) # flatten token array (grouped by sentence)
                 self.stats['grammar-errors']  = len([error for error in self.errors if error['type'] == 'grammar'])
@@ -219,6 +249,12 @@ class Document():
                 self.database.post('/users/' + self.author + '/proofreads/' + self.name + '/stats', self.stats)
 
 def main():
+        '''
+        args:
+            none
+        output:
+            this main function is used only for local testing of the Document class
+        '''
 	user     = raw_input('user: ')
 	filename = raw_input('filename: ') 
 	name     = filename[:-5] # this is wrong !!

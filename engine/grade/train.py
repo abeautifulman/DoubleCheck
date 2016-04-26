@@ -7,7 +7,12 @@ from glob       import glob     # unix style path/file management
 from json       import dump, load     # save our training vectors to json for K means analysis
 
 class Trainer:
-
+    '''
+    args:
+        none, though user input will be prompted to define the master training directory upon construction
+    output:
+        produces json vectors of all errors for all folders of essays in the master_dir
+    '''
     master_dir    = raw_input("What directory should I train on? ") + "/"
     with open('training_data/DoubleCheckEssays/vectors.json', 'r') as vectors:
         essay_vectors = load(vectors)
@@ -44,6 +49,12 @@ class Trainer:
                     sleep(10)
 
     def save_vectors(self):
+        '''
+        args: 
+            none
+        output:
+            saves all json training vectors in the training_data folder
+        '''
         with open("training_data/"+self.master_dir+"vectors.json", "w") as training_json:
             dump(self.essay_vectors, training_json)
         print "All training vectors saved!"
