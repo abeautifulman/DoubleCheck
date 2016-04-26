@@ -1,9 +1,9 @@
 # DoubleCheck
 
 **Team Members:**
-* Connor Davis
 * Jared Jolton
 * Ryan Bohannon
+* Connor Davis
 * Wil Braun
 * Joe Kiefer 
 
@@ -14,7 +14,7 @@ DoubleCheck
 Essay proofreader that gives user feedback about the overall quality of their essay, informing them of any common mistakes.
 
 **Vision Statement:**
-College Essays, now slightly less terrible
+Everyone Makes Mistakes
 
 **Motivation:**
 Provide a tool to help streamline the task of essay writing by providing instant feedback and suggestions. 
