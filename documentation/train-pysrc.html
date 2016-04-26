@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>train</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >DoubleCheck</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;train
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="train-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="train-module.html">Module train</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">__future__</tt> <tt class="py-keyword">import</tt> <tt class="py-name">division</tt> <tt class="py-comment"># use floating point division always</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module document=document-module.html"><a title="document" class="py-name" href="#" onclick="return doclink('link-0', 'document', 'link-0');">document</a></tt>   <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class document.Document=document.Document-class.html"><a title="document.Document" class="py-name" href="#" onclick="return doclink('link-1', 'Document', 'link-1');">Document</a></tt> <tt class="py-comment"># our main class for essay proccessing</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">time</tt>       <tt class="py-keyword">import</tt> <tt class="py-name">sleep</tt>    <tt class="py-comment"># try not to get our API key revoked for ATD</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">glob</tt>       <tt class="py-keyword">import</tt> <tt class="py-name">glob</tt>     <tt class="py-comment"># unix style path/file management</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">json</tt>       <tt class="py-keyword">import</tt> <tt class="py-name">dump</tt><tt class="py-op">,</tt> <tt class="py-name">load</tt>     <tt class="py-comment"># save our training vectors to json for K means analysis</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="Trainer"></a><div id="Trainer-def"><a name="L9"></a><tt class="py-lineno"> 9</tt> <a class="py-toggle" href="#" id="Trainer-toggle" onclick="return toggle('Trainer');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="train.Trainer-class.html">Trainer</a><tt class="py-op">:</tt> </tt>
+</div><div id="Trainer-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Trainer-expanded"><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-docstring">'''</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring">    args:</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">        none, though user input will be prompted to define the master training directory upon construction</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">    output:</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">        produces json vectors of all errors for all folders of essays in the master_dir</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt id="link-2" class="py-name" targets="Variable train.Trainer.master_dir=train.Trainer-class.html#master_dir"><a title="train.Trainer.master_dir" class="py-name" href="#" onclick="return doclink('link-2', 'master_dir', 'link-2');">master_dir</a></tt>    <tt class="py-op">=</tt> <tt class="py-name">raw_input</tt><tt class="py-op">(</tt><tt class="py-string">"What directory should I train on? "</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"/"</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-string">'training_data/DoubleCheckEssays/vectors.json'</tt><tt class="py-op">,</tt> <tt class="py-string">'r'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">vectors</tt><tt class="py-op">:</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt id="link-3" class="py-name" targets="Variable train.Trainer.essay_vectors=train.Trainer-class.html#essay_vectors"><a title="train.Trainer.essay_vectors" class="py-name" href="#" onclick="return doclink('link-3', 'essay_vectors', 'link-3');">essay_vectors</a></tt> <tt class="py-op">=</tt> <tt class="py-name">load</tt><tt class="py-op">(</tt><tt class="py-name">vectors</tt><tt class="py-op">)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="Trainer.__init__"></a><div id="Trainer.__init__-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="Trainer.__init__-toggle" onclick="return toggle('Trainer.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="train.Trainer-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Trainer.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Trainer.__init__-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">dir_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">glob</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="train.Trainer.master_dir" class="py-name" href="#" onclick="return doclink('link-4', 'master_dir', 'link-2');">master_dir</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"/*"</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">            <tt class="py-keyword">print</tt> <tt class="py-string">"\nProcessing"</tt><tt class="py-op">,</tt> <tt class="py-name">dir_</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">essay</tt> <tt class="py-keyword">in</tt> <tt class="py-name">glob</tt><tt class="py-op">(</tt><tt class="py-name">dir_</tt> <tt class="py-op">+</tt> <tt class="py-string">"/*"</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-comment"># essays nested in subdirs</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">essay</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="train.Trainer.essay_vectors" class="py-name" href="#" onclick="return doclink('link-5', 'essay_vectors', 'link-3');">essay_vectors</a></tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">                    <tt class="py-keyword">print</tt> <tt class="py-string">"\nDoubleChecking"</tt><tt class="py-op">,</tt> <tt class="py-name">essay</tt>  </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">                    <tt class="py-name">doc</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="document.Document" class="py-name" href="#" onclick="return doclink('link-6', 'Document', 'link-1');">Document</a></tt><tt class="py-op">(</tt><tt class="py-name">essay</tt><tt class="py-op">,</tt> <tt class="py-string">"Wil"</tt><tt class="py-op">)</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">                    <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Method document.Document.document_to_text()=document.Document-class.html#document_to_text"><a title="document.Document.document_to_text" class="py-name" href="#" onclick="return doclink('link-7', 'document_to_text', 'link-7');">document_to_text</a></tt><tt class="py-op">(</tt><tt class="py-name">essay</tt><tt class="py-op">,</tt> <tt class="py-name">essay</tt><tt class="py-op">)</tt> <tt class="py-comment"># should probably truncate the first "essay" argument to just the filename</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">                    <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method document.Document.preprocess_text()=document.Document-class.html#preprocess_text"><a title="document.Document.preprocess_text" class="py-name" href="#" onclick="return doclink('link-8', 'preprocess_text', 'link-8');">preprocess_text</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                    <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Method document.Document.statistics()=document.Document-class.html#statistics"><a title="document.Document.statistics" class="py-name" href="#" onclick="return doclink('link-9', 'statistics', 'link-9');">statistics</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                    <tt class="py-name">errors</tt> <tt class="py-op">=</tt> <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Method document.Document.proofread()=document.Document-class.html#proofread"><a title="document.Document.proofread" class="py-name" href="#" onclick="return doclink('link-10', 'proofread', 'link-10');">proofread</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">                    <tt class="py-name">err_stats</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'grammar'</tt><tt class="py-op">:</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">                                 <tt class="py-string">'suggestion'</tt><tt class="py-op">:</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">                                 <tt class="py-string">'spelling'</tt><tt class="py-op">:</tt> <tt class="py-number">0</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                                 <tt class="py-op">}</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">                    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">err</tt> <tt class="py-keyword">in</tt> <tt class="py-name">errors</tt><tt class="py-op">:</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                            <tt class="py-name">err_stats</tt><tt class="py-op">[</tt><tt class="py-name">err</tt><tt class="py-op">[</tt><tt class="py-string">"type"</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">                    <tt class="py-keyword">except</tt> <tt class="py-name">TypeError</tt><tt class="py-op">:</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">                        <tt class="py-keyword">print</tt> <tt class="py-string">"No errors!"</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                    <tt class="py-name">token_sentence_ratio</tt> <tt class="py-op">=</tt> <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt class="py-name">stats</tt><tt class="py-op">[</tt><tt class="py-string">'tokens'</tt><tt class="py-op">]</tt> <tt class="py-op">/</tt> <tt class="py-name">doc</tt><tt class="py-op">.</tt><tt class="py-name">stats</tt><tt class="py-op">[</tt><tt class="py-string">'sentences'</tt><tt class="py-op">]</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                    <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="train.Trainer.essay_vectors" class="py-name" href="#" onclick="return doclink('link-11', 'essay_vectors', 'link-3');">essay_vectors</a></tt><tt class="py-op">[</tt><tt class="py-name">essay</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                                                    <tt class="py-name">err_stats</tt><tt class="py-op">[</tt><tt class="py-string">'grammar'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                                                    <tt class="py-name">err_stats</tt><tt class="py-op">[</tt><tt class="py-string">'suggestion'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                                                    <tt class="py-name">err_stats</tt><tt class="py-op">[</tt><tt class="py-string">'spelling'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                                                    <tt class="py-name">token_sentence_ratio</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">                                                <tt class="py-op">]</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">                    <tt class="py-keyword">print</tt> <tt class="py-string">"Completed "</tt> <tt class="py-op">+</tt> <tt class="py-name">essay</tt> <tt class="py-op">+</tt> <tt class="py-string">". Sleeping..."</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">                    <tt class="py-name">sleep</tt><tt class="py-op">(</tt><tt class="py-number">10</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"> </tt>
+<a name="Trainer.save_vectors"></a><div id="Trainer.save_vectors-def"><a name="L51"></a><tt class="py-lineno">51</tt> <a class="py-toggle" href="#" id="Trainer.save_vectors-toggle" onclick="return toggle('Trainer.save_vectors');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="train.Trainer-class.html#save_vectors">save_vectors</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Trainer.save_vectors-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Trainer.save_vectors-expanded"><a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-docstring">'''</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">        args: </tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring">            none</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">        output:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">            saves all json training vectors in the training_data folder</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-string">"training_data/"</tt><tt class="py-op">+</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="train.Trainer.master_dir" class="py-name" href="#" onclick="return doclink('link-12', 'master_dir', 'link-2');">master_dir</a></tt><tt class="py-op">+</tt><tt class="py-string">"vectors.json"</tt><tt class="py-op">,</tt> <tt class="py-string">"w"</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">training_json</tt><tt class="py-op">:</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">            <tt class="py-name">dump</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name"><a title="train.Trainer.essay_vectors" class="py-name" href="#" onclick="return doclink('link-13', 'essay_vectors', 'link-3');">essay_vectors</a></tt><tt class="py-op">,</tt> <tt class="py-name">training_json</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">"All training vectors saved!"</tt> </tt>
+</div></div><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"><tt class="py-keyword">print</tt> <tt class="py-string">"starting training..."</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"><tt id="link-14" class="py-name" targets="Variable train.t=train-module.html#t"><a title="train.t" class="py-name" href="#" onclick="return doclink('link-14', 't', 'link-14');">t</a></tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name" targets="Class train.Trainer=train.Trainer-class.html"><a title="train.Trainer" class="py-name" href="#" onclick="return doclink('link-15', 'Trainer', 'link-15');">Trainer</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"><tt id="link-16" class="py-name"><a title="train.t" class="py-name" href="#" onclick="return doclink('link-16', 't', 'link-14');">t</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method train.Trainer.save_vectors()=train.Trainer-class.html#save_vectors"><a title="train.Trainer.save_vectors" class="py-name" href="#" onclick="return doclink('link-17', 'save_vectors', 'link-17');">save_vectors</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >DoubleCheck</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Apr 26 17:05:57 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

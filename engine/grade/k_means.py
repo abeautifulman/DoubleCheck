@@ -5,13 +5,13 @@ import random
 from scipy.spatial import distance
 
 class KMeansCluster:
-	'''
-	args:
-		data: the vectorized essay information in json format
-	output:
-		clusters of essays sorted by grade
-	Implements K Means Clustering to grade essays
-	'''
+    '''
+    args:
+	data: the vectorized essay information in json format
+    output:
+	    clusters of essays sorted by grade
+    Implements K Means Clustering to grade essays
+    '''
 
     iteration = 0
 
@@ -30,37 +30,37 @@ class KMeansCluster:
                              'grade': grade } for grade in ['A', 'B', 'C', 'D', 'F']] # A, B, C, D, F 
 
     def find_class(self, point, centroids):
-		'''
-		args:
-			point: single dictionary in objects class variable
-			centroids: class variable containing all centroids
-		output:
-			expected class of the point
-		Uses euclidian distance to find nearest centroid
-		'''
+        '''
+        args:
+                point: single dictionary in objects class variable
+                centroids: class variable containing all centroids
+        output:
+                expected class of the point
+        Uses euclidian distance to find nearest centroid
+        '''
         point_vec    = (point['a'],point['b'],point['c'],point['d'])
         dst = [(distance.euclidean(point_vec, (centroid['a'],centroid['b'],centroid['c'],centroid['d'])), centroid) for centroid in centroids]
         return min(dst, key = lambda x: x[0])
 
     def update(self):
-		'''
-		args:
-			none
-		output:
-			create new class memberships for all points
-		Establishes new class memberships for all essays
-		'''	
+        '''
+        args:
+                none
+        output:
+                create new class memberships for all points
+        Establishes new class memberships for all essays
+        '''	
         for point in self.objects:
             new_class = self.find_class(point, self.centroids)[1] 
             point['grade'] = new_class['grade']
 		
     def recompute_centroids(self):
-		'''
-		args:
-			none
-		output:
-			finds the mean of each dimension for each cluster and updates the centroids with this mean
-		'''
+        '''
+        args:
+                none
+        output:
+                finds the mean of each dimension for each cluster and updates the centroids with this mean
+        '''
         for centroid in self.centroids:
             group = [x for x in self.objects if x['grade'] == centroid['grade']]
             centroid['a'] = sum([x['a'] for x in group]) / len([x['a'] for x in group])
@@ -90,12 +90,12 @@ while run == True:
 
 
 def reorder_grades(grades):
-	'''
-	args:
-		grades
-	output:
-		because K Means performs unsupervised clustering, this function sorts the clusters to label them with the correct corresponding grades
-	'''
+    '''
+    args:
+            grades
+    output:
+            because K Means performs unsupervised clustering, this function sorts the clusters to label them with the correct corresponding grades
+    '''
     class_vals = {'A': {'sum': 0, 'mean': 0},
                   'B': {'sum': 0, 'mean': 0},
                   'C': {'sum': 0, 'mean': 0},

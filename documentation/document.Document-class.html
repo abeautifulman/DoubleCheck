@@ -14,9 +14,6 @@
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
   <tr valign="middle">
-  <!-- Home link -->
-      <th>&nbsp;&nbsp;&nbsp;<a
-        href="document-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
 
   <!-- Tree link -->
       <th>&nbsp;&nbsp;&nbsp;<a
@@ -63,20 +60,13 @@
 <h1 class="epydoc">Class Document</h1><p class="nomargin-top"><span class="codelink"><a href="document-pysrc.html#Document">source&nbsp;code</a></span></p>
 <pre class="literalblock">
 
-convert, parse, and operate on input text
+args: 
+    filename: the name of the document, including the extension
+    user: the name of the document author/user (for use with the doublecheck website, this should be the authenticated UID from firebase)
 
-TODO: 
-- [ ] change all print statements to logs
-- [ ] paragraph tokenize !!!
-- [/] writing document to database -- what to include? everything?
-- [ ] LSA? lsa.colorado.edu?
-- [ ] word similarity matrix
-- [ ] word2vec!!   https://radimrehurek.com/gensim/models/word2vec.html --&gt; class gensim.models.word2vec.Word2Vec: Class for training, using and evaluating neural networks described in https://code.google.com/p/word2vec/
-- [ ] bigram transformer (process phrases like words) !!
-- [ ] 
-        .
-        .
-        .
+output:
+    This class can be used for several text processing purposes, depending on the instance methods called. 
+    It is used on DoubleCheck's DigitalOcean servers to process the job queue of essays.
 
 </pre>
 
@@ -138,9 +128,10 @@ TODO:
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="document_to_text"></a><span class="summary-sig-name">document_to_text</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="document.Document-class.html#document_to_text" class="summary-sig-name">document_to_text</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">filename</span>,
-        <span class="summary-sig-arg">file_path</span>)</span></td>
+        <span class="summary-sig-arg">file_path</span>)</span><br />
+      args:...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="document-pysrc.html#Document.document_to_text">source&nbsp;code</a></span>
             
@@ -156,7 +147,8 @@ TODO:
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="proofread"></a><span class="summary-sig-name">proofread</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a href="document.Document-class.html#proofread" class="summary-sig-name">proofread</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      args: ...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="document-pysrc.html#Document.proofread">source&nbsp;code</a></span>
             
@@ -172,7 +164,8 @@ TODO:
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="vectorize"></a><span class="summary-sig-name">vectorize</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a href="document.Document-class.html#vectorize" class="summary-sig-name">vectorize</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      args: ...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="document-pysrc.html#Document.vectorize">source&nbsp;code</a></span>
             
@@ -189,7 +182,7 @@ TODO:
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="document.Document-class.html#preprocess_text" class="summary-sig-name">preprocess_text</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      removed a lot of awesome functionality from this fcn for training...</td>
+      args:...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="document-pysrc.html#Document.preprocess_text">source&nbsp;code</a></span>
             
@@ -205,7 +198,8 @@ TODO:
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="statistics"></a><span class="summary-sig-name">statistics</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a href="document.Document-class.html#statistics" class="summary-sig-name">statistics</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      args: ...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="document-pysrc.html#Document.statistics">source&nbsp;code</a></span>
             
@@ -274,7 +268,7 @@ m/', None)">firebase.FirebaseApplication('https://doublecheckpr<code class="vari
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="sw"></a><span class="summary-name">sw</span> = <code title="&lt;closed file 'stopwords.txt', mode 'r' at 0x10d3eac00&gt;">&lt;closed file 'stopwords.txt', mode 'r' at 0x10d3eac00&gt;</code>
+        <a name="sw"></a><span class="summary-name">sw</span> = <code title="&lt;closed file 'stopwords.txt', mode 'r' at 0x11ad51c90&gt;">&lt;closed file 'stopwords.txt', mode 'r' at 0x11ad51c90&gt;</code>
     </td>
   </tr>
 <tr>
@@ -304,6 +298,87 @@ m/', None)">firebase.FirebaseApplication('https://doublecheckpr<code class="vari
   </td>
 </tr>
 </table>
+<a name="document_to_text"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">document_to_text</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">file_path</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="document-pysrc.html#Document.document_to_text">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+args:
+    filename: the filename of the document (can be the same as the file_path)
+    file_path: the path used to find the document
+output:
+    converts .doc, .docx, .odt, .pdf, and .txt into acceptable format for text processing
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="proofread"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">proofread</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="document-pysrc.html#Document.proofread">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+args: 
+    none
+output: 
+    generates spelling, grammar, and suggestion errors using the AfterTheDeadline API, and posts them to firebase
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="vectorize"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">vectorize</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="document-pysrc.html#Document.vectorize">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+args: 
+    none
+output:
+    generates an LDA topic model of the document using gensim and pyLDAvis
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
 <a name="preprocess_text"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -318,8 +393,42 @@ m/', None)">firebase.FirebaseApplication('https://doublecheckpr<code class="vari
     </td>
   </tr></table>
   
-  <p>removed a lot of awesome functionality from this fcn for training... 
-  need to add it back in!</p>
+  <pre class="literalblock">
+
+args:
+    none
+output:
+    splits essay into sentences and tokens
+    generates part of speech tags for all sentences/tokens
+    performs named entity recognition
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="statistics"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">statistics</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="document-pysrc.html#Document.statistics">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+args: 
+    none
+output:
+    computes all stats and posts to firebase
+
+</pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -393,9 +502,6 @@ m/', None)
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
   <tr valign="middle">
-  <!-- Home link -->
-      <th>&nbsp;&nbsp;&nbsp;<a
-        href="document-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
 
   <!-- Tree link -->
       <th>&nbsp;&nbsp;&nbsp;<a
@@ -420,7 +526,7 @@ m/', None)
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Apr 26 16:19:39 2016
+    Generated by Epydoc 3.0.1 on Tue Apr 26 17:05:57 2016
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

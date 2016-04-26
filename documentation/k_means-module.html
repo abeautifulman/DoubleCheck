@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>document</title>
+  <title>k_means</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -39,7 +39,7 @@
   <tr valign="top">
     <td width="100%">
       <span class="breadcrumbs">
-        Module&nbsp;document
+        Module&nbsp;k_means
       </span>
     </td>
     <td>
@@ -49,14 +49,14 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="document-module.html"
+            >]&nbsp;|&nbsp;<a href="k_means-module.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
-<h1 class="epydoc">Module document</h1><p class="nomargin-top"><span class="codelink"><a href="document-pysrc.html">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Module k_means</h1><p class="nomargin-top"><span class="codelink"><a href="k_means-pysrc.html">source&nbsp;code</a></span></p>
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -78,10 +78,8 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="document.Document-class.html" class="summary-name">Document</a><br />
-      args: 
-    filename: the name of the document, including the extension
-    user: the name of the document author/user (for use with the doublecheck website, this should be the authenticated UID from firebase)
+        <a href="k_means.KMeansCluster-class.html" class="summary-name">KMeansCluster</a><br />
+      args:...
     </td>
   </tr>
 </table>
@@ -108,10 +106,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="document-module.html#main" class="summary-sig-name">main</a>()</span><br />
+          <td><span class="summary-sig"><a href="k_means-module.html#reorder_grades" class="summary-sig-name">reorder_grades</a>(<span class="summary-sig-arg">grades</span>)</span><br />
       args:...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="document-pysrc.html#main">source&nbsp;code</a></span>
+            <span class="codelink"><a href="k_means-pysrc.html#reorder_grades">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -141,7 +139,42 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code>
+        <a name="data"></a><span class="summary-name">data</span> = <code title="json.load(vectors_json)">json.load(vectors_json)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="classifier"></a><span class="summary-name">classifier</span> = <code title="KMeansCluster(data)">KMeansCluster(data)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="grades"></a><span class="summary-name">grades</span> = <code title="[obj [&quot;grade&quot;] for obj in classifier.objects]">[obj [&quot;grade&quot;] for obj in classifier.objects]</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="new_grades"></a><span class="summary-name">new_grades</span> = <code title="[]">[]</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="run"></a><span class="summary-name">run</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="final_grades"></a><span class="summary-name">final_grades</span> = <code title="reorder_grades(classifier.objects)">reorder_grades(classifier.objects)</code>
     </td>
   </tr>
 </table>
@@ -163,26 +196,26 @@
   </td>
 </tr>
 </table>
-<a name="main"></a>
+<a name="reorder_grades"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">main</span>()</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reorder_grades</span>(<span class="sig-arg">grades</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="document-pysrc.html#main">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="k_means-pysrc.html#reorder_grades">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
 args:
-    none
+        grades
 output:
-    this main function is used only for local testing of the Document class
+        because K Means performs unsupervised clustering, this function sorts the clusters to label them with the correct corresponding grades
 
 </pre>
   <dl class="fields">
