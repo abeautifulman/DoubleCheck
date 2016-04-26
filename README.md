@@ -14,10 +14,10 @@ DoubleCheck
 Essay proofreader that gives user feedback about the overall quality of their essay, informing them of any common mistakes.
 
 **Vision Statement:**
-Everyone Makes Mistakes
+Everyone makes mistakes
 
 **Motivation:**
-Provide a tool to help streamline the task of essay writing by providing instant feedback and suggestions. 
+Provide a tool to help streamline the task of essay writing by providing instant feedback and suggestions regarding spelling, grammar, and topics. 
 
 **Risks:**
 * May have difficulty finding graded college essays to train supervised learning algorithm
@@ -28,6 +28,19 @@ Provide a tool to help streamline the task of essay writing by providing instant
 * Utilization of open source libraries (NLTK, GenSim, Numpy, etc.)
 * Essay writing domain knowledge
 * Use of personal essay resources, and other essays from college students
+
+**How to Run:**
+* clone repository
+* navigate to express directory
+* run "npm install" to install required packages
+* run "node server.js" to launch the website locally
+
+**Repo Organization**
+* 'engine' directory contains all NLP files, sample essays, and machine learning scripts
+* 'express' directory contains all files necessary to launch website
+* 'documentation' directory contains automatically generated HTML pages with information about engine code
+* 'screenshots' directory contains screenshots of project progress
+*  root level contains all files required for CSCI 3308 (Presentation, PDF, README, etc.)
 
 
 
