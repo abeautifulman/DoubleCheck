@@ -40,21 +40,13 @@ import os
 
 class Document():
 	'''
-	convert, parse, and operate on input text
+        args: 
+            filename: the name of the document, including the extension
+            user: the name of the document author/user (for use with the doublecheck website, this should be the authenticated UID from firebase)
 
-	TODO: 
-	- [ ] change all print statements to logs
-	- [ ] paragraph tokenize !!!
-	- [/] writing document to database -- what to include? everything?
-	- [ ] LSA? lsa.colorado.edu?
-	- [ ] word similarity matrix
-	- [ ] word2vec!!   https://radimrehurek.com/gensim/models/word2vec.html --> class gensim.models.word2vec.Word2Vec: Class for training, using and evaluating neural networks described in https://code.google.com/p/word2vec/
-	- [ ] bigram transformer (process phrases like words) !!
-	- [ ] 
-		.
-		.
-		.
-	'''
+        output:
+            
+        '''
 	# establish connection to firebase
 	database = firebase.FirebaseApplication('https://doublecheckproject.firebaseio.com/', None)
 
@@ -246,7 +238,7 @@ def main():
 	else:
 		print "converted document to raw text..."
 		print "NOT proofreading the document..."
-		doc.proofread()
+		#doc.proofread()
 		print "vectorizing text and performing LDA..."
 		doc.vectorize() # must be called after document_to_test
 		print "preprocessing raw text..."

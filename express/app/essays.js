@@ -8,11 +8,11 @@ router.get('/essays', authenticate, function(req, res) {
 
   ref.child('users').child(authData.uid).child('proofreads').once('value', function(snap) {
     var essays = snap.val();
-    
+
     res.render('essays', {
-      title: 'Essays', 
+      title: 'Essays',
       user: authData.password.email,
-      essay: essays.essay2.text
+      essays: essays
     });
 
     console.log("Proofreads:");
@@ -26,7 +26,7 @@ router.get('/essays', authenticate, function(req, res) {
 
 function authenticate(req, res, next) {
   var ref = new Firebase("https://doublecheckproject.firebaseio.com");
-  var authData = ref.getAuth(); 
+  var authData = ref.getAuth();
   if (authData) {
     console.log("User " + authData.uid + " is logged in with " + authData.provider);
     return next();

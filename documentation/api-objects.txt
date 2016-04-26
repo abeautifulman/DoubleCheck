@@ -1,0 +1,17 @@
+document	document-module.html
+document.__package__	document-module.html#__package__
+document.main	document-module.html#main
+document.Document	document.Document-class.html
+document.Document.statistics	document.Document-class.html#statistics
+document.Document.word	document.Document-class.html#word
+document.Document.tokenizer	document.Document-class.html#tokenizer
+document.Document.database	document.Document-class.html#database
+document.Document.proofread	document.Document-class.html#proofread
+document.Document.sw	document.Document-class.html#sw
+document.Document.convert_pdf_to_txt	document.Document-class.html#convert_pdf_to_txt
+document.Document.stopwords	document.Document-class.html#stopwords
+document.Document.sent_detector	document.Document-class.html#sent_detector
+document.Document.vectorize	document.Document-class.html#vectorize
+document.Document.preprocess_text	document.Document-class.html#preprocess_text
+document.Document.__init__	document.Document-class.html#__init__
+document.Document.document_to_text	document.Document-class.html#document_to_text
