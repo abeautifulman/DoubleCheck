@@ -1,3 +1,7 @@
+h1 {
+        padding: 3em 0;
+}
+
 @font-face {
 	font-family: 'codropsicons';
 	font-weight: normal;
@@ -200,13 +204,18 @@ a:focus {
 	position: relative;
 	overflow: hidden;
 	min-height: 20vh;
-	padding: 2em 0 8em;
+	padding: 0 0 8em;
 }
 
 .section--menu h2 {
 	color: #fff;
 }
 
+.section--menu strong {
+        text-align: center;
+        color: white;
+        font-size: 200%;
+}
 .break {
 	padding: 3em 0;
 	text-align: center;

@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+from wikitools import Topic
+from nltk.tokenize import word_tokenize
+
+import sys
+
+def main(argv):
+    for word in argv[1:]:
+        wiki = Topic(word)
+        wiki.findTopicOnline()
+
+if __name__=='__main__': main(sys.argv)
